@@ -110,7 +110,7 @@ Configuration is defined in config/master.json
 		    	"listen" : "127.0.0.1",
 				// should the client request a url that is not in the routes list
 				// it will be redirected to the redir-URL
-		    	"redir" : "http://www.afterbuy.de"  
+		    	"redir" : "http://www.andreas-marschke.name"  
 	    	},
 	    	{
 		    	"protocol" : "https",
@@ -118,7 +118,7 @@ Configuration is defined in config/master.json
 		    	"cert" : "./config/localhost.cert",
 		    	"port" : "4443",
 		    	"listen" : "127.0.0.1",
-		    	"redir" : "http://www.afterbuy.de"
+		    	"redir" : "http://www.andreas-marschke.name"
 	    	}
 		]
     },
