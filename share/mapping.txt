@@ -1,0 +1,28 @@
+EXPLANATION OF REQUEST PARAM NAMES
+==================================
+
+{
+  "v" : "Version number of the boomerang library in use.",
+  "u" : "URL of page that sends the beacon.",
+  "t_done" : "[optional] Perceived load time of the page.",
+  "t_page" : "[optional] Time taken from the head of the page to page_ready."
+  "t_resp" : "[optional] Time taken from the user initiating the request to the first byte of the response."
+  "t_load" : "[optional] If the page were prerendered, this is the time to fetch and  prerender the page."
+  "t_prerender" : "[optional] If the page were prerendered, this is the time from start of prefetch to the actual page display. It may only be useful for  debugging."
+  "t_postrender" : "[optional] If the page were prerendered, this is the time from prerender finish to actual page display. It may only be useful for debugging.
+  "boomerang" : "The time it took boomerang to load up from first byte to last byte"
+  "boomr_fb" : "[optional] The time it took from the start of page load to the first byte of boomerang. Only included if we know when page load started."
+  "r" : "URL of page that set the start time of the beacon."
+  "r2" : "[optional] URL of referrer of current page. Only set if different from r and strict_referrer has been explicitly turned off."
+  "rt_start : "Specifies where the start time came from. May be one of cookie for the start cookie, navigation for the W3C navigation timing API, csi for older versions of Chrome or gtb for the Google Toolbar."
+  "rt_bstart" : "The timestamp when boomerang showed up on the page"
+  "rt.end" : "The timestamp when the done() method was called"
+  "bw" : "User's measured bandwidth in bytes per second"
+  "bw_err" : "95% confidence interval margin of error in measuring user's bandwidth"
+  "lat" : "User's measured HTTP latency in milliseconds"
+  "lat_err" : "95% confidence interval margin of error in measuring user's latency"
+  "bw_time" : "Timestamp (seconds since the epoch) on the user's browser when the bandwidth and latency was measured"
+  "dns.t" : "The worst-case DNS latency from the user's browser to your DNS server."
+  "ipv6_latency" : "Latency in milliseconds of getting data from an ipv6 host when connecting to the IP. Will be set to NA if the client cannot connect to the ipv6 host."
+  "ipv6_lookup" : "Latency of getting data from a hostname that resolves to an ipv6 address. Will be set to NA if the client cannot resolve or connect to the ipv6 host."
+}

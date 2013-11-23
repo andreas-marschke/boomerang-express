@@ -1,0 +1,8 @@
+
+#_LONGTERM__
+
+* beacon collected webpage usage
+  boomerang logs clicks on elements on a page. Make a  pageunloadevent
+  beacon that sends the data to boomerang-express
+
+

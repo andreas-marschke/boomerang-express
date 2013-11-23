@@ -1,0 +1,26 @@
+{
+    "server": {
+	"listeners" : [
+	    {
+		"protocol" : "http",
+		"port" : "4000",
+		"listen" : "127.0.0.1",
+		"redir" : "http://www.andreas-marschke.name"
+	    }
+	]
+    },
+    "mongodb" : {
+	"db" : "boomerang",
+	"options" : "maxPoolSize=10&journal=false",
+	"credentials" : {
+	    "user" : "boomr",
+	    "password" : "boot"
+	},
+	"servers" : [
+	    {
+		"host" : "127.0.0.1",
+		"port" : 27017
+	    }
+	]
+    }
+}

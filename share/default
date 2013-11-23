@@ -1,0 +1,22 @@
+# Sourced when calling init.d script for boomerang-express
+
+# Passed to forever commandline
+# -e
+STDERR="/var/log/nodejs/boomerang-express.stderr"
+
+# -o
+STDOUT="/var/log/nodejs/boomerang-express.stdout"
+
+# -l
+LOG="/var/log/nodejs/boomerang-express.forever"
+
+# -p
+BASEPATH="/var/run/nodejs/"
+
+# --pidFile
+PIDFILE="/var/run/nodejs/boomerang-express.pid"
+
+# -m 
+MAX=3
+EXTRA_ARGS="--append --no-colors"
+
