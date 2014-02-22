@@ -14,8 +14,8 @@
     }
   ],
   "repository": {
-    "type": "none",
-    "url": "imaginary://protocols.example.none"
+    "type": "git",
+    "url": "git@github.com:andreas-marschke/boomerang-express.git"
   },
   "keywords": [
     "mongodb",
