@@ -51,11 +51,12 @@ MongoClient.connect(url,{
 	console.log(err);
 	process.exit(1);
     }
-    
+
     var express = require('express');
     var app = express();
 
-    app.use(express.bodyParser());
+    app.use(express.urlencoded());
+    app.use(express.json());
     app.use(express.cookieParser('boomerang-express'));
     app.use(express.logger());
     app.use(express.cookieSession());
