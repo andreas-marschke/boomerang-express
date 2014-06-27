@@ -59,6 +59,7 @@ MongoClient.connect(url,{
     app.use(express.cookieParser('boomerang-express'));
     app.use(express.logger());
     app.use(express.cookieSession());
+    app.use(express.static('public'))
     app.settings.db = db;
 
     var routes = require('./lib/routes');
