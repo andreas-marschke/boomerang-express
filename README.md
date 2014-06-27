@@ -98,7 +98,7 @@ Globally:
 
 Configuration is defined in config/master.json
 
-```
+```json
 {
     // Configuration data for the server
     "server": {
