@@ -11,11 +11,16 @@
     {
       "name": "Andreas Marschke",
       "email": "andreas.marschke@gmail.com"
+    },
+    {
+      "name": "Steffen Bruchmann",
+      "email": "hello@sbruchmann.me",
+      "url": "http://sbruchmann.me"
     }
   ],
   "repository": {
-    "type": "none",
-    "url": "imaginary://protocols.example.none"
+    "type": "git",
+    "url": "git@github.com:andreas-marschke/boomerang-express.git"
   },
   "keywords": [
     "mongodb",
