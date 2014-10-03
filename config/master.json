@@ -3,24 +3,39 @@
 	"listeners" : [
 	    {
 		"protocol" : "http",
-		"port" : "4000",
-		"listen" : "127.0.0.1",
-		"redir" : "http://www.andreas-marschke.name"
+		"port" : "4001",
+		"listen" : "0.0.0.0"
 	    }
 	]
     },
     "mongodb" : {
 	"db" : "boomerang",
 	"options" : "maxPoolSize=10&journal=false",
-	"credentials" : {
-	    "user" : "boomr",
-	    "password" : "boot"
-	},
 	"servers" : [
 	    {
-		"host" : "127.0.0.1",
+		"host" : "mongo-01",
 		"port" : 27017
 	    }
+	]
+    },
+    "data" : {
+	"numbers" : [
+	    "t_resp",
+	    "t_page",
+	    "t_done",
+	    "dom-ln",
+	    "dom-sz",
+	    "dom-sz",
+	    "dom-img",
+	    "dom-script",
+	    "bw",
+	    "bw_err",
+	    "lat",
+	    "lat_err",
+	    "boomr_fb",
+	    "t_head",
+	    "t_body",
+	    "t_domloaded"
 	]
     }
 }
