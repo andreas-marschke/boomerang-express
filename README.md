@@ -14,16 +14,16 @@ Your webpage code may look like this:
     <script src="/javascripts/boomerang.min.js" type="text/javascript"> </script>
     <script type="text/javascript">
       BOOMR.init({
-        beacon_url: "http://<boomerang-express server>/beacon/0000",      
+        beacon_url: "//<boomerang-express server>/beacon/0000",
         DNS : {
-          base_url: "http://<boomerang-express server>/"
+          base_url: "//<boomerang-express server>/"
         }, 
         RT: {
           cookie: "cookie-rt", 
           strict_referrer: false
         },
         BW: {
-          base_url: "http://<boomerang-express server>/",
+          base_url: "//<boomerang-express server>/",
           cookie: "cookie-bw",
           nruns: 1
         }
