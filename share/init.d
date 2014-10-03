@@ -17,22 +17,22 @@
 
 # Do NOT "set -e"
 
-LOG_DIR="/var/log/nodejs"
+LOG_DIR="/var/log"
 
 # Path where boomerang-express is installed
-APP_PATH="/opt/nodejs/boomerang-express"
+APP_PATH="/opt/boomerang-express"
 
 # STDERR to file:
-STDERR="$LOG_DIR/boomerang-express.stderr"
+STDERR="$LOG_DIR/boomerang-express.err"
 
 # STDOUT to file: 
-STDOUT="$LOG_DIR/boomerang-express.stdout"
+STDOUT="$LOG_DIR/boomerang-express.log"
 
 # forever logs to:
 LOG="$LOG_DIR/boomerang-express.forever"
 
 # basepath for pids etc.:
-BASEPATH="/var/run/nodejs/"
+BASEPATH="/var/run"
 
 # pidfile is saved at: 
 PIDFILE="$BASEPATH/boomerang-express.pid"

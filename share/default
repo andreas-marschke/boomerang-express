@@ -2,19 +2,19 @@
 
 # Passed to forever commandline
 # -e
-STDERR="/var/log/nodejs/boomerang-express.stderr"
+STDERR="/var/log/boomerang-express.err"
 
 # -o
-STDOUT="/var/log/nodejs/boomerang-express.stdout"
+STDOUT="/var/log/boomerang-express.log"
 
 # -l
-LOG="/var/log/nodejs/boomerang-express.forever"
+LOG="/var/log/boomerang-express.forever"
 
 # -p
-BASEPATH="/var/run/nodejs/"
+BASEPATH="/var/run/"
 
 # --pidFile
-PIDFILE="/var/run/nodejs/boomerang-express.pid"
+PIDFILE="/var/run/boomerang-express.pid"
 
 # -m 
 MAX=3
