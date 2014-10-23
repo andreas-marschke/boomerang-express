@@ -8,15 +8,26 @@
 	    }
 	]
     },
-    "mongodb" : {
-	"db" : "boomerang",
-	"options" : "maxPoolSize=10&journal=false",
-	"servers" : [
-	    {
+    "datastore" : {
+	"active" : "nedb",
+	"nedb" : {
+	    "directory": "./data",
+	    "inMemoryOnly" : false,
+	    "autoload": false
+	},
+	"mongodb" : {
+	    "db" : "boomerang",
+	    "options" : {
+		"poolSize": 10,
+		"stats": true,
+		"buffer": -1
+	    },
+	    "server" : {
 		"host" : "mongo-01",
-		"port" : 27017
+		"port" : 27017,
+		"secure": false
 	    }
-	]
+	}
     },
     "data" : {
 	"numbers" : [
