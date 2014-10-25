@@ -5,10 +5,11 @@
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Example initscript
-# Description:       This file should be used to construct scripts to be
-#                    placed in /etc/init.d.
+# Short-Description: Beacon reciever service
+# Description:       boomerang-express beacon reciever service
 ### END INIT INFO
+
+# chkconfig: 2345 20 80
 
 # Author: Foo Bar <foobar@baz.org>
 #
@@ -37,6 +38,8 @@ BASEPATH="/var/run"
 # pidfile is saved at: 
 PIDFILE="$BASEPATH/boomerang-express.pid"
 
+LOCKFILE="/var/lock/subsys/boomerang-express"
+
 # Max retries: 
 MAX=3
 
@@ -58,15 +61,28 @@ SCRIPTNAME=/etc/init.d/$NAME
 DAEMON=$APP_PATH/node_modules/forever/bin/forever
 
 do_start() {
+	if [ -e "$LOCKFILE" ];then 
+		echo "Warning! Lockfile exists!"
+		return 1
+	else
+		touch $LOCKFILE
+	fi
     $DAEMON start -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || return 1
 }
 
 do_stop() {
+	if [ -e "$LOCKFILE" ]; then
+		rm $LOCKFILE
+	fi
     $DAEMON stop -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE  --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || return 1
 }
 
 do_restart() {
+	if [ -e $LOCKFILE ]; then
+		rm $LOCKFILE
+	fi
     $DAEMON restart -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE  --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || return 1
+	touch $LCCKFILE
 }
 
 do_list() {
@@ -84,6 +100,9 @@ case "$1" in
 	do_restart
 	;;
     list)
+	do_list
+	;;
+	status)
 	do_list
 	;;
     *)
