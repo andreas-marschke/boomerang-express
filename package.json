@@ -51,6 +51,8 @@
   "devDependencies": {
     "grunt-easy-rpm": "~1.4.0",
     "grunt-cli": "~0.1.13",
-    "grunt": "~0.4.5"
+    "grunt": "~0.4.5",
+    "grunt-exec": "~0.4.6",
+    "grunt-contrib-clean": "~0.6.0"
   }
 }
