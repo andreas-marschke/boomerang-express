@@ -6,7 +6,16 @@ module.exports = function (grunt) {
 	pkg: grunt.file.readJSON('package.json'),
 	clean: {
 	    options: {},
-	    src: ['lib/routes/*~','*.js~']
+	    src: ['lib/routes/*~','*.js~'],
+		rpm_tmp: ['tmp-*']
+	},
+	exec: {
+		lint: {
+			command: "(which rpmlint && rpmlint --file=.rpmlintrc <%= pkg.name %>-<%= pkg.version%>-<%= pkg.release %>.<%= easy_rpm.options.buildArch %>.rpm) || exit -1",
+			stdErr: true,
+			stdOut: true,
+			exitCode: 64
+		}
 	},
 	easy_rpm: {
 		options: {
@@ -17,6 +26,7 @@ module.exports = function (grunt) {
 			vendor: "ViA-Online GmbH",
 			group: "System Environment/Daemons",
 			version: "<%= pkg.version %>",
+			url: "<%= pkg.repository.url %>",
 			release: "<%= pkg.release %>",
 			buildArch: "x86_64",
 			dependencies: ["nodejs >= 0.10.3", "git", "npm >= 1.3.6"],
@@ -70,7 +80,7 @@ module.exports = function (grunt) {
 				},
 				{ 
 					src:  "boomerang-express", 
-				  	dest: "/etc/init.d/",
+				  	dest: "/etc/rc.d/init.d/",
 				  	cwd: "etc/init.d",
 					owner: "root",
 					group: "root",
@@ -103,8 +113,14 @@ module.exports = function (grunt) {
 		}
 	}
 	});
+	grunt.loadNpmTasks('grunt-exec');
+	grunt.loadNpmTasks('grunt-contrib-clean');;
+	// Linting using rpmlint
+	grunt.registerTask('rpm_lint',['exec:lint']);
 	
+	grunt.registerTask('rpm_tmp_clean',['clean:rpm_tmp']);
+
 	grunt.loadNpmTasks('grunt-easy-rpm');
-    grunt.loadNpmTasks('grunt-rpm');
-	grunt.registerTask('rpm',['easy_rpm']);
+
+	grunt.registerTask('rpm',['rpm_tmp_clean','easy_rpm','rpm_lint']);
 };
