@@ -1,20 +1,16 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          skeleton
+# Provides:          boomerang-express
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
+# Default-Start:     -
+# Default-Stop:      -
 # Short-Description: Beacon reciever service
 # Description:       boomerang-express beacon reciever service
 ### END INIT INFO
+# chkconfig: 		 2345 20 80
 
-# chkconfig: 2345 20 80
-
-# Author: Foo Bar <foobar@baz.org>
-#
-# Please remove the "Author" lines above and replace them
-# with your own name if you copy and modify this script.
+# Author: Andreas Marschke <andreas.marschke@gmail.com>
 
 # Do NOT "set -e"
 
@@ -104,6 +100,9 @@ case "$1" in
 	;;
 	status)
 	do_list
+	;;
+	reload)
+	do_restart
 	;;
     *)
 	echo "Usage: $SCRIPTNAME {start|stop|stopall|restart|restartall|list}" >&2
