@@ -10,3 +10,17 @@ from Config import *
 # our dependencies.
 
 addFilter("E: dir-or-file-in-opt .*")
+
+# Its an example afterall 
+
+addFilter("W: non-conffile-in-etc .*\.example")
+
+# Calling etc/init.d/boomerang-express will source /etc/default/boomerang-express
+# makes sure operating-systems specific directories are respected and will be 
+# necessary to create pid,files and find basepaths on filesystem
+
+addFilter("W: non-conffile-in-etc /etc/default/boomerang-express")
+
+# XXX TODO: make these not part of %post instructions in easy-rpm
+
+addFilter("W: dangerous-command-in-%post chmod")
