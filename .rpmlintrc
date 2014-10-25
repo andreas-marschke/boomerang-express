@@ -1,0 +1,12 @@
+# -*- python -*-
+
+# This line is mandatory to access the configuration functions
+from Config import *
+
+
+# We *want* to install our code into opt as we'll do more than 
+# just install basic application code into this directory and 
+# will not rely on package-manager supplied packages for 
+# our dependencies.
+
+addFilter("E: dir-or-file-in-opt .*")
