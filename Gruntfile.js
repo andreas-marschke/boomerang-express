@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 			command: "(which rpmlint && rpmlint --file=.rpmlintrc <%= pkg.name %>-<%= pkg.version%>-<%= pkg.release %>.<%= easy_rpm.options.buildArch %>.rpm) || exit -1",
 			stdErr: true,
 			stdOut: true,
-			exitCode: 64
+			exitCode: 0
 		}
 	},
 	easy_rpm: {
@@ -22,15 +22,19 @@ module.exports = function (grunt) {
 			name: "<%= pkg.name %>",
 			description: "<%= pkg.description %>",
 			summary: "<%= pkg.description %>",
-			license: "LGPL",
+			license: "<%= pkg.license %>",
 			vendor: "ViA-Online GmbH",
 			group: "System Environment/Daemons",
 			version: "<%= pkg.version %>",
-			url: "<%= pkg.repository.url %>",
+			url: "<%= pkg.homepage %>",
 			release: "<%= pkg.release %>",
-			buildArch: "x86_64",
+			buildArch: "noarch",
 			dependencies: ["nodejs >= 0.10.3", "git", "npm >= 1.3.6"],
 			keepTemp: true,
+			changelog: [
+				"* Sat Oct 25 2014 Andreas Marschke <andreas.marschke@gmail.com> 0.0.1-1",
+				"- initial package"
+			],
 			preInstallScript: [
 				"echo 'Pre-Installation Procedure:'",
 				"echo ' - unless already exists add system-user \"boomerang\"'",
@@ -41,9 +45,13 @@ module.exports = function (grunt) {
 				"echo 'Post-Installation Procedure:'",
 				"echo ' - installing package-dependencies into /opt/boomerang-express/node_modules'",
 				"cd /opt/boomerang-express && npm install . --cache-min=1 --cache-max=2 --rollback true --color false",
+				"chkconfig --add boomerang-express",
 				"echo 'DONE'"
 			],
-			postUninstall: [
+			preUninstallScript: [
+				"chkconfig --del boomerang-express"
+			],
+			postUninstallScript: [
 				"echo 'Post-UnInstallation Procedure:'",
 				"echo ' - delete system boomerang'",
 				"userdel boomerang",
