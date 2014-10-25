@@ -2,6 +2,7 @@
   "name": "boomerang-express",
   "preferGlobal": true,
   "description": "A recieving Server for boomerang.js data queries",
+  "homepage": "https://github.com/andreas-marschke/boomerang-express",
   "version": "0.0.1",
   "release": "1",
   "author": {
@@ -16,7 +17,7 @@
   ],
   "repository": {
     "type": "none",
-    "url": "imaginary://protocols.example.none"
+    "url": "https://github.com/andreas-marschke/boomerang-express.git"
   },
   "keywords": [
     "mongodb",
@@ -54,5 +55,6 @@
     "grunt": "~0.4.5",
     "grunt-exec": "~0.4.6",
     "grunt-contrib-clean": "~0.6.0"
-  }
+  },
+  "license" : "MIT"
 }
