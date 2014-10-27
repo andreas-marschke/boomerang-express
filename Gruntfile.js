@@ -29,7 +29,7 @@ module.exports = function (grunt) {
 			url: "<%= pkg.homepage %>",
 			release: "<%= pkg.release %>",
 			buildArch: "noarch",
-			dependencies: ["nodejs >= 0.10.3", "git", "npm >= 1.3.6"],
+			dependencies: ["nodejs >= 0.10.3", "git", "npm >= 1.3.6","shadow-utils"],
 			keepTemp: true,
 			changelog: [
 				"* Sat Oct 25 2014 Andreas Marschke <andreas.marschke@gmail.com> 0.0.1-1",
@@ -38,7 +38,7 @@ module.exports = function (grunt) {
 			preInstallScript: [
 				"echo 'Pre-Installation Procedure:'",
 				"echo ' - unless already exists add system-user \"boomerang\"'",
-				"useradd --base-dir /opt --home-dir /opt/boomerang-express --no-log-init --system --shell /sbin/nologin --no-create-home boomerang || true",
+				"getent passwd boomerang >/dev/null || useradd --base-dir /opt --home-dir /opt/boomerang-express --no-log-init --system --shell /sbin/nologin --no-create-home boomerang || true",
 				"echo 'DONE'"
 			],
 			postInstallScript: [
@@ -54,10 +54,10 @@ module.exports = function (grunt) {
 			postUninstallScript: [
 				"echo 'Post-UnInstallation Procedure:'",
 				"echo ' - delete system boomerang'",
-				"userdel boomerang",
 				"echo ' - delete empty directories'",
 				"rmdir -p /usr/share/doc/boomerang-express",
-				"rmdir -p /opt/boomerang-express/lib --ignore-fail-on-non-empty",
+				"rm -rf /opt/boomerang-express/lib",
+				"rm -rf /opt/boomerang-express/public",
 				"echo ' - delete node_modules'",
 				"rm -rf /opt/boomerang-express/node_modules",
 				"echo 'DONE'"
@@ -84,7 +84,7 @@ module.exports = function (grunt) {
 					dest: "/opt/boomerang-express/",
 				  	owner: "root", 
 					group: "boomerang",
-					mode: "640"
+					mode: "644"
 				},
 				{ 
 					src:  "boomerang-express", 
@@ -100,7 +100,7 @@ module.exports = function (grunt) {
 				  	cwd: "etc/default",
 					owner: "root",
 					group: "root",
-					mode: "600"
+					mode: "644"
 				},
 				{ 
 					src: "master.json.example", 
