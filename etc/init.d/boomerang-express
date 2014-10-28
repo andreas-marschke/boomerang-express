@@ -84,7 +84,7 @@ do_restart() {
 	rm $LOCKFILE
     fi
 
-    $DAEMON restart -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE  --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || return 1
+    $DAEMON restart -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE  --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || retval = $?
     
     if [ ! -e $LOCKFILE ] && [ $retval -ne 1 ]; then
 	touch $LOCKFILE
