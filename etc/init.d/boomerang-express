@@ -8,7 +8,7 @@
 # Short-Description: Beacon reciever service
 # Description:       boomerang-express beacon reciever service
 ### END INIT INFO
-# chkconfig:         -
+# chkconfig:         - 80 20
 
 # Author: Andreas Marschke <andreas.marschke@gmail.com>
 
