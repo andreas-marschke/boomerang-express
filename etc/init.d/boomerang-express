@@ -8,7 +8,7 @@
 # Short-Description: Beacon reciever service
 # Description:       boomerang-express beacon reciever service
 ### END INIT INFO
-# chkconfig: 		 2345 20 80
+# chkconfig:         -
 
 # Author: Andreas Marschke <andreas.marschke@gmail.com>
 
@@ -57,28 +57,38 @@ SCRIPTNAME=/etc/init.d/$NAME
 DAEMON=$APP_PATH/node_modules/forever/bin/forever
 
 do_start() {
-	if [ -e "$LOCKFILE" ];then 
-		echo "Warning! Lockfile exists!"
-		return 1
-	else
-		touch $LOCKFILE
-	fi
-    $DAEMON start -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || return 1
+    
+    if [ -e $LOCKFILE ]; then 
+	echo "Warning! Lockfile exists!"
+	return 1
+    fi
+
+    $DAEMON start -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || retval = $?
+    
+    if [ ! -e $LOCKFILE ] && [ $retval -ne 1 ]; then
+	touch $LOCKFILE
+    fi
 }
 
 do_stop() {
-	if [ -e "$LOCKFILE" ]; then
-		rm $LOCKFILE
-	fi
-    $DAEMON stop -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE  --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || return 1
+
+    $DAEMON stop -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE  --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || retval = $?
+
+    if [ -e $LOCKFILE ] && [ $retval -ne 1 ]; then
+	rm $LOCKFILE
+    fi
 }
 
 do_restart() {
-	if [ -e $LOCKFILE ]; then
-		rm $LOCKFILE
-	fi
+    if [ -e $LOCKFILE ]; then
+	rm $LOCKFILE
+    fi
+
     $DAEMON restart -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE  --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || return 1
-	touch $LCCKFILE
+    
+    if [ ! -e $LOCKFILE ] && [ $retval -ne 1 ]; then
+	touch $LOCKFILE
+    fi
 }
 
 do_list() {
@@ -98,10 +108,10 @@ case "$1" in
     list)
 	do_list
 	;;
-	status)
+    status)
 	do_list
 	;;
-	reload)
+    reload)
 	do_restart
 	;;
     *)
@@ -110,3 +120,4 @@ case "$1" in
 esac
 
 :
+
