@@ -86,9 +86,10 @@ var ds = new Backends(config.datastore, logger).on("open",function(){
 	}
     }
 }).on('dbOpenError',function(exception) {
-    logger.error({ Error: exception });
+    logger.error( exception );
     process.exit();
 }).on('error',function(error) { 
-    logger.error({ Error: error });
+    
+    logger.error( error );
     process.exit();
 });
