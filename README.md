@@ -56,9 +56,15 @@ On the boomerang-express side you will see requests to
 `image-(+*).(png|gif)` and `/beacon/0000`.
 
 `/beacon/0000` will recieve a parameterized GET request containing data
-from the evaluation previously described tests. boomerang-express will
+from the evaluation of previously described tests. boomerang-express will
 save this data together with the Customer Identification Number (here
-`0000`) into the mongodb under the `beacon-0000` collection.
+`0000`) into the mongodb under the `beacon_0000` collection.
+
+_NOTE:_ boomerang-express expects pre-existing collections ie. `beacon_0000`.
+
+Should you have enabled the boomerang.js plugins clicks and restiming
+you'll also see data inserted into the collections `restiming_0000` and
+`clicks_0000` where these handle the specific data of these plugins.
 
 If you have more than one customer you'd like to manage add a
 different ID to each of the beacon-urls like 
@@ -73,6 +79,8 @@ Also feel free to use alphanumerical IDs such as:
   beacon_url: "http://<boomerang-express server>/beacon/HamsterShop"
 ```
 
+This still depends on the collections you've created in your database.
+
 ## Requirements
 
 - express (http://expressjs.com)
@@ -85,7 +93,7 @@ Also feel free to use alphanumerical IDs such as:
 Locally (recommended): 
 
 ```shell
- $> npm install 
+ $> npm install .
 ```
 
 Globally: 
@@ -98,74 +106,39 @@ Globally:
 
 Configuration is defined in config/master.json
 
-```json
-{
-    // Configuration data for the server
-    "server": {
-	    // IPs and ports to listen on currently supports http and https
-		"listeners" : [
-	    	{
-		    	"protocol" : "http",
-		    	"port" : "4000",
-		    	"listen" : "127.0.0.1",
-				// should the client request a url that is not in the routes list
-				// it will be redirected to the redir-URL
-		    	"redir" : "http://www.andreas-marschke.name"  
-	    	},
-	    	{
-		    	"protocol" : "https",
-		    	"key" : "./config/localhost.key",
-		    	"cert" : "./config/localhost.cert",
-		    	"port" : "4443",
-		    	"listen" : "127.0.0.1",
-		    	"redir" : "http://www.andreas-marschke.name"
-	    	}
-		]
-    },
-	// Configuration data for the MongoDB Server
-    "mongodb" : {
-	    // Database to open
-	    "db" : "boomerang",
-		// Parameters for the connection 
-		// See: http://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html#the-url-connection-format
-		"options" : "maxPoolSize=100&journal=true",
-		// Username and Password to use for authentication (Mandatory!)
-		// See:	http://docs.mongodb.org/manual/tutorial/enable-authentication/
-		// And: http://docs.mongodb.org/manual/tutorial/enable-authentication-in-sharded-cluster/
-		"credentials" : {
-	    	"user" : "root",
-	    	"password" : "2kimpler96"
-		},
-		// List of Servers to connect to requires host (domainname or
-		// IP) and port
-		"servers" : [
-	    	{
-				"host" : "mongodb-01.andreas-marschke.name",
-				"port" : 27017
-	    	}
-		]
-    }
-}
-
-```
+See the [setup documentation](docs/setup.md) for more information on how
+to configure boomerang-express for your environment.
 
 ## Deployment
 
-If you wish to use boomerang-express in production you can use the
-Makefile supplied with this distribution to install the init-scripts
-and default configuration file for the forever server that will host
-the express.js application. 
+### CentOS
 
-Unless you have installed all dependencies for boomerang-express prior
-to installing boomerang-express using a package management system you
-can install boomerang-express using `make install`. 
+Installing boomerang-express on CentOS is handled using grunt.
+You'll need to install the packages under devDependencies as well as the following:
 
-After modifying master.json to meet your requirement you can start the
-server using:
+ - `rpmdevtools`: tools for build rpms
+ - `rpmlint`: post-build linting of rpms
 
+Once you have these installed you'll need to run:
+
+ - if you have all dependencies installed globally:
+
+```shell
+  $> grunt rpm
 ```
-$> /etc/init.d/boomerang-express start
+
+ - if you have all dependencies installed locally:
+
+```shell
+ $> ./node_modules/.bin/grunt rpm
 ```
-This will start the server listening on the IP adress you've
-configured in boomerang for the servers. 
+
+This will build an rpm package in the project root-directory. If you have a
+deployment scenario involving a local centos repository you may import the rpm
+file into your repository.
+
+---
+
+Setting up for development and more tips visit our [development documentation](docs/index.md)
+
 
