@@ -29,6 +29,9 @@
   "scripts": {
     "start": "node app.js"
   },
+  "optionalDependencies": {
+    "nedb": "^0.11.1"
+  },
   "dependencies": {
     "body-parser": "^1.9.0",
     "bunyan": "^1.1.0",
@@ -54,7 +57,10 @@
     "grunt-cli": "~0.1.13",
     "grunt": "~0.4.5",
     "grunt-exec": "~0.4.6",
-    "grunt-contrib-clean": "~0.6.0"
+    "grunt-contrib-clean": "~0.6.0",
+    "chai": "^1.9.2",
+    "mocha": "^2.0.1",
+    "shortid": "^2.1.2"
   },
   "license" : "MIT"
 }

@@ -1,135 +1,71 @@
 // requirements
 
-var MongoClient = require('mongodb').MongoClient,
-    conf = require('node-conf'),
+var conf = require('node-conf'),
     http = require('http'),
     https = require('https'),
     fs = require('fs'),
     path = require('path'),
-    bodyParser = require("body-parser"),
-    cookieParser = require("cookie-parser"),
-    cookieSession =  require("cookie-session"),
+    config = conf.load(process.env.NODE_ENV),
     bunyan = require('bunyan'),
-    Static = require('serve-static'),
-    config = conf.load(process.env.NODE_ENV);
+    Backends = require('./lib/backends');
 
 // combine all the servers listed in configuration into one big server-url
-var buildMongoUrl = function(db,servers,credentials,options) {
-    var url = "mongodb://";
-    //var url = "mongodb://" + credentials.user  + ":" + credentials.password  + "@";
-    for (var i = 0; i < servers.length; i++) {
-	url += servers[i].host + ":" + (servers[i].port || "27017");
-	if (i !== (servers.length - 1)) {
-	    url += ",";
-	} else {
-	    url += "/" + db + "?" + options;
-	}
-    }
-    return url;
-};
-
-
 if ( typeof config.server === "undefined" ) {
     console.error("Error could not parse configuration!");
     return;
 }
 
-var url="";
+var logger = bunyan.createLogger({
+    name: "boomerang-express-datastore",
+    immediate: true,
+    streams: [{
+	stream: process.stdout,
+	level: 'debug'
+    }]
+});
 
-var url = buildMongoUrl(
-    config.mongodb.db,
-    config.mongodb.servers,
-    config.mongodb.credentials,
-    config.mongodb.options
-);
-
-MongoClient.connect(url,{
-    strict: true,
-    db : { native_parser : false },
-    server : {
-	socketOptions : {
-	    connectTimeoutMS: 400
-	},
-	autoreconnect: true
-    }
-},function(err,db){
-    if (err !== null) {
-	console.log(err);
-	process.exit(1);
-    }
+var ds = new Backends(config.datastore, logger).on("open",function(){ 
 
     var express = require('express');
     var app = express();
 
-    app.use(Static('public'));
-
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.text({ extended: true, inflate: true })); 
-    app.use(bodyParser.json({ strict: true , type: "text/plain"})); 
-
-    app.use(cookieParser('boomerangexpress'));
-    app.use(cookieSession({ 
-	name: "boomerangexpress",
-	key: "boomerangexpress",
-	keys: ["boomerangexpress"],
-	secret: "boomerangexpress"
-    }));
+    var middlewares = require ('./lib/middlewares');
+    app.use(middlewares);
     
-    app.use(require('express-bunyan-logger')({
-	name: "boomerang-express",
+    app.settings.ds = ds;
+    app.settings.log = bunyan.createLogger({
+	name: "boomerang-express-application",
 	immediate: false,
-	parseUA: true,
-	serializers: {
-	    req: function (req) { 
-		return { 
-		    method: req.method,
-		    url: req.url,
-		    headers: req.headers
-		};
-	    },
-	    res: function () {
-		return null;
-	    },
-	    "user-agent": function (ua) {
-		return { 
-		    browser: ua.family,
-		    version: [ua.major,ua.minor,ua.patch].join("."),
-		    device: ua.device.family,
-		    os: ua.os.family
-		};
-	    },
-	    body: function () { return null; },
-	    "req-headers":  function () { return null; }
-	},
-	streams: [{
-	    stream: process.stdout,
-	    level: 'info'	    
-	}]
-    }));
-
-    app.settings.db = db;
-    app.settings.data = config.data;
-    app.settings.logger = bunyan.createLogger({
-	name: "boomerang-express",
-	immediate: true,
 	streams: [{
 	    stream: process.stdout,
 	    level: 'debug'
 	}]
     });
 
+    app.settings.data = config.data;
+
     var routes = require('./lib/routes');
     app.use(routes);
     
     for ( var i = 0; i < config.server.listeners.length; i++) {
 	if (config.server.listeners[i].protocol === "http" ) {
+
+	    var x = i;
 	    var server = http.createServer(app);
 	    server.listen(
 		config.server.listeners[i].port,
 		config.server.listeners[i].listen,
-		function() { app.settings.logger.info("HTTP-Server up!"); });
+		function() {
+		    app.settings.log.info({
+			message: "HTTP-Server up!",
+			port: config.server.listeners[x].port,
+			ip: config.server.listeners[x].listen
+		    });		    
+		});
 	} else if (config.server.listeners[i].protocol === "https" ) {
 
+	    var p = i;  
+	    
 	    var server = https.createServer({
 		key: fs.readFileSync(path.resolve(config.server.listeners[i].key)),
 		cert: fs.readFileSync(path.resolve(config.server.listeners[i].cert))
@@ -138,8 +74,21 @@ MongoClient.connect(url,{
 	    server.listen(
 		config.server.listeners[i].port,
 		config.server.listeners[i].listen,
-		function(){ app.settings.logger.info("HTTPS-Server up!"); });
+		function(){
+		    app.settings.log.info({
+			message: "HTTPS-Server up!",
+			port: config.server.listeners[p].port,
+			ip: config.server.listeners[p].listen,
+			key: config.server.listeners[p].key,
+			cert: config.server.listeners[p].cert
+		    });
+		});
 	}
     }
+}).on('dbOpenError',function(exception) {
+    logger.error({ Error: exception });
+    process.exit();
+}).on('error',function(error) { 
+    logger.error({ Error: error });
+    process.exit();
 });
-
