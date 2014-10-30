@@ -5,3 +5,4 @@ tmp-*
 *.rpm
 tests/backends/configs.js
 
+config/master.json
