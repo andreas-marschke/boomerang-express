@@ -1,3 +1,4 @@
 *~
 *.swp
 node_modules*
+tests/backends/configs.js
