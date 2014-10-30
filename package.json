@@ -60,7 +60,7 @@
     "grunt-contrib-clean": "~0.6.0",
     "chai": "^1.9.2",
     "mocha": "^2.0.1",
-    "shortid": "^2.1.2"
+    "shortid": "~2.0.1"
   },
   "license" : "MIT"
 }
