@@ -87,7 +87,7 @@ _Params:_
  - `"data"`: an Object containing mangled flat data as it should be inserted into
    your datastore.
 
-#### toOID(id)
+#### `function` toOID(id)
 
 _Params:_
  - `"id"`: a `String` representation of an id returned from Object insertion.
@@ -104,3 +104,4 @@ like the type of data you just inserted with the string "Inserted" appended to i
 As a parameter with the event you may pass the id of the inserted element.
 
 This is currently the way we reference the original `beacon` in our restiming objects.
+
