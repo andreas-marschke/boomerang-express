@@ -3,7 +3,7 @@
 	"listeners" : [
 	    {
 		"protocol" : "http",
-		"port" : "4001",
+		"port" : "4000",
 		"listen" : "0.0.0.0"
 	    }
 	]
@@ -23,7 +23,7 @@
 		"buffer": -1
 	    },
 	    "server" : {
-		"host" : "mongo-01",
+		"host" : "localhost",
 		"port" : 27017,
 		"secure": false
 	    }
