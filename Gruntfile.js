@@ -102,6 +102,14 @@ module.exports = function (grunt) {
 			group: "root",
 			mode: "644"
 		    },
+		    {
+			src:  "boomerang-express",
+			dest: "/etc/logrotate.d/",
+			cwd: "etc/logrotate.d",
+			owner: "root",
+			group: "root",
+			mode: "644"
+		    },
 		    { 
 			src: "master.json.example", 
 			dest: "/etc/boomerang-express/", 
