@@ -7,8 +7,7 @@ var conf = require('node-conf'),
     path = require('path'),
     config = conf.load(process.env.NODE_ENV),
     bunyan = require('bunyan'),
-    Backends = require('./lib/backends'),
-    Static = require('serve-static');
+    Backends = require('./lib/backends');
 
 // combine all the servers listed in configuration into one big server-url
 if ( typeof config.server === "undefined" ) {
@@ -30,17 +29,8 @@ var ds = new Backends(config.datastore, logger).on("open",function(){
     var express = require('express');
     var app = express();
 
-    var middlewares = require ('./lib/middlewares');
-    app.use(middlewares);
-
-    app.use(Static('public',{
-	dotfiles: 'deny',
-	etag: true,
-	extensions: false,
-	setHeaders: function(res,path) {
-	    res.setHeader('cache-controle', 'private, max-age=0, no-cache, no-store, no-transform');
-	}
-    }));
+    var Middlewares = require ('./lib/middlewares');
+    new Middlewares(config,app);
 
     app.settings.ds = ds;
     app.settings.log = bunyan.createLogger({
