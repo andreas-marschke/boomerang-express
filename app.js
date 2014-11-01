@@ -7,7 +7,8 @@ var conf = require('node-conf'),
     path = require('path'),
     config = conf.load(process.env.NODE_ENV),
     bunyan = require('bunyan'),
-    Backends = require('./lib/backends');
+    Backends = require('./lib/backends'),
+    Static = require('serve-static');
 
 // combine all the servers listed in configuration into one big server-url
 if ( typeof config.server === "undefined" ) {
@@ -24,14 +25,23 @@ var logger = bunyan.createLogger({
     }]
 });
 
-var ds = new Backends(config.datastore, logger).on("open",function(){ 
+var ds = new Backends(config.datastore, logger).on("open",function(){
 
     var express = require('express');
     var app = express();
 
     var middlewares = require ('./lib/middlewares');
     app.use(middlewares);
-    
+
+    app.use(Static('public',{
+	dotfiles: 'deny',
+	etag: true,
+	extensions: false,
+	setHeaders: function(res,path) {
+	    res.setHeader('cache-controle', 'private, max-age=0, no-cache, no-store, no-transform');
+	}
+    }));
+
     app.settings.ds = ds;
     app.settings.log = bunyan.createLogger({
 	name: "boomerang-express-application",
@@ -46,7 +56,7 @@ var ds = new Backends(config.datastore, logger).on("open",function(){
 
     var routes = require('./lib/routes');
     app.use(routes);
-    
+
     for ( var i = 0; i < config.server.listeners.length; i++) {
 	if (config.server.listeners[i].protocol === "http" ) {
 
@@ -60,12 +70,12 @@ var ds = new Backends(config.datastore, logger).on("open",function(){
 			message: "HTTP-Server up!",
 			port: config.server.listeners[x].port,
 			ip: config.server.listeners[x].listen
-		    });		    
+		    });
 		});
 	} else if (config.server.listeners[i].protocol === "https" ) {
 
-	    var p = i;  
-	    
+	    var p = i;
+
 	    var server = https.createServer({
 		key: fs.readFileSync(path.resolve(config.server.listeners[i].key)),
 		cert: fs.readFileSync(path.resolve(config.server.listeners[i].cert))
@@ -88,8 +98,8 @@ var ds = new Backends(config.datastore, logger).on("open",function(){
 }).on('dbOpenError',function(exception) {
     logger.error( exception );
     process.exit();
-}).on('error',function(error) { 
-    
+}).on('error',function(error) {
+
     logger.error( error );
     process.exit();
 });
