@@ -8,8 +8,7 @@ module.exports = function (grunt) {
 	pkg: grunt.file.readJSON("package.json"),
 	eslint: {
 	    options: {
-		format: "compact",
-		config: "./.eslintrc"
+		format: "compact"
 	    },
 	    target: [
 		"Gruntfile.js",

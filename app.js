@@ -1,4 +1,4 @@
-/* eslint */
+"use strict";
 // requirements
 var conf = require("node-conf"),
     http = require("http"),
@@ -44,32 +44,30 @@ if ( typeof config.server === "undefined" ) {
     process.exit(1);
 }
 
+var ds = new Backends(config.datastore, datastoreLogger).on("open",main)
+    .on("dbOpenError",handleError)
+    .on("error",handleError);
 
 function handleError(error) {
     datastoreLogger.error( error );
     process.exit();
-};
+}
 
 function main() {
-    new Middlewares(config,app);
+    app.use(new Middlewares(config));
     var filter = new Filters(config.data,filterLogger);
 
-    app.settings.ds = ds,
-    app.settings.log = appLogger,
+    app.settings.ds = ds;
+    app.settings.log = appLogger;
     app.settings.filter = filter;
 
-    var routes = require('./lib/routes');
+    var routes = require("./lib/routes");
     app.use(routes);
 
     config.server.listeners.forEach(startListener,app);
-};
+}
 
-
-var ds = new Backends(config.datastore, datastoreLogger).on("open",main)
-    .on('dbOpenError',handleError)
-    .on('error',handleError);
-
-function postStartup(data) {
+function postStartup () {
     app.settings.log.info("Server Started");
     if(typeof config.security !== "undefined") {
 	app.settings.log.info({context: config.security},"Dropping to security context " + (config.security.user || "boomerang") + ":" + (config.security.group || "boomerang"));
@@ -80,7 +78,7 @@ function postStartup(data) {
 	process.setuid("boomerang");
 	process.setgid("boomerang");
     }
-};
+}
 
 function startListener(listener) {
     if (listener.protocol === "http" ) {
@@ -88,12 +86,12 @@ function startListener(listener) {
     } else if (listener.protocol === "https" ) {
 	httpsListener(listener,this);
     }
-};
+}
 
 function httpListener (listener, application) {
     var server = http.createServer(application);
     server.listen(listener.port, listener.listen, postStartup);
-};
+}
 
 function httpsListener (listener, application) {
     var server = https.createServer({
@@ -102,4 +100,4 @@ function httpsListener (listener, application) {
     },application);
 
     server.listen(listener.port, listener.listen, postStartup);
-};
+}

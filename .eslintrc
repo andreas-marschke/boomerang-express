@@ -4,6 +4,7 @@
 	"new-cap":0,
 	"no-console":0,
 	"no-delete-var":0,
+	"no-use-before-define":0,
 	"no-mixed-spaces-and-tabs":[2, true],
 	"no-process-exit": 0,
 	"no-space-before-semi":0,
