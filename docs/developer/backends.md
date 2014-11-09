@@ -105,3 +105,16 @@ As a parameter with the event you may pass the id of the inserted element.
 
 This is currently the way we reference the original `beacon` in our restiming objects.
 
+## _Abuse prevention_
+
+It is very easy to abuse beacons to crash your site or beacon-servers. To prevent this
+from happening *you* as the developer of a backend are responsible to counter-act
+by developing a way to verify that beacon come from a valid source.
+
+An example implementation of this has been done in the [mongodb backend](../../lib/backends/mongodb/index.js) where
+two seperate collections are created holding references to the owners and and their
+feature-set they have requested to use off of boomerang-express.
+
+There is not necessarily a hard and fast rule as to what is good and bad in this case.
+Most of that heavily depends on the way you plan to implement and use boomerang-express
+in your environment.
