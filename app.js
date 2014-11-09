@@ -71,12 +71,12 @@ function postStartup () {
     app.settings.log.info("Server Started");
     if(typeof config.security !== "undefined") {
 	app.settings.log.info({context: config.security},"Dropping to security context " + (config.security.user || "boomerang") + ":" + (config.security.group || "boomerang"));
-	process.setuid(config.security.user || "boomerang");
 	process.setgid(config.security.group || "boomerang");
+	process.setuid(config.security.user || "boomerang");
     } else {
 	app.settings.log.info({context: { user: "boomerang", group: "boomerang" }},"Dropping to security context boomerang:boomerang");
-	process.setuid("boomerang");
 	process.setgid("boomerang");
+	process.setuid("boomerang");
     }
 }
 
