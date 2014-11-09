@@ -1,0 +1,18 @@
+{
+    "rules": {
+	"camelcase":1,
+	"new-cap":0,
+	"no-console":0,
+	"no-delete-var":0,
+	"no-mixed-spaces-and-tabs":[2, true],
+	"no-process-exit": 0,
+	"no-space-before-semi":0,
+	"no-underscore-dangle":1,
+	"quotes":[2, "double"],
+	"space-infix-ops":0,
+	"strict":1
+    },
+    "env": {
+	"node": true
+    }
+}

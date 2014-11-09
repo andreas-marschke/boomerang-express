@@ -1,27 +1,22 @@
+/* eslint */
 // requirements
+var conf = require("node-conf"),
+    http = require("http"),
+    https = require("https"),
+    fs = require("fs"),
+    path = require("path"),
+    bunyan = require("bunyan"),
+    express = require("express"),
+    Filters = require("./lib/filters"),
+    Middlewares = require("./lib/middlewares"),
+    Backends = require("./lib/backends");
 
-var conf = require('node-conf'),
-    http = require('http'),
-    https = require('https'),
-    fs = require('fs'),
-    path = require('path'),
-    config = conf.load(process.env.NODE_ENV),
-    bunyan = require('bunyan'),
-    express = require('express'),
-    app = express(),
-    Filters = require('./lib/filters'),
-    Middlewares = require ('./lib/middlewares'),
-    Backends = require('./lib/backends');
-
-// combine all the servers listed in configuration into one big server-url
-if ( typeof config.server === "undefined" ) {
-    console.error("Error could not parse configuration!");
-    return;
-}
+var config = conf.load(process.env.NODE_ENV);
+var app = express();
 
 var streams = [{
     stream: process.stdout,
-    level: 'debug'
+    level: "debug"
 }];
 
 var datastoreLogger = bunyan.createLogger({
@@ -42,13 +37,15 @@ var appLogger = bunyan.createLogger({
     streams: streams
 });
 
+// combine all the servers listed in configuration into one big server-url
+if ( typeof config.server === "undefined" ) {
+    var error = new Error("Error could not parse configuration!");
+    appLogger.error(error);
+    process.exit(1);
+}
 
-var ds = new Backends(config.datastore, datastoreLogger).on("open",main)
-    .on('dbOpenError',handleError)
-    .on('error',handleError);
 
 function handleError(error) {
-
     datastoreLogger.error( error );
     process.exit();
 };
@@ -67,6 +64,11 @@ function main() {
     config.server.listeners.forEach(startListener,app);
 };
 
+
+var ds = new Backends(config.datastore, datastoreLogger).on("open",main)
+    .on('dbOpenError',handleError)
+    .on('error',handleError);
+
 function postStartup(data) {
     app.settings.log.info("Server Started");
     if(typeof config.security !== "undefined") {
@@ -78,7 +80,6 @@ function postStartup(data) {
 	process.setuid("boomerang");
 	process.setgid("boomerang");
     }
-
 };
 
 function startListener(listener) {
