@@ -68,7 +68,7 @@ module.exports = function (grunt) {
     grunt.registerTask("rpmTmpClean", ["clean:rpmTmp"]);
 
     grunt.loadNpmTasks("grunt-easy-rpm");
-    grunt.registerTask("rpm", ["rpmTmpClean", "easy_rpm", "rpm_lint"]);
+    grunt.registerTask("rpm", ["rpmTmpClean", "easy_rpm", "rpmLint"]);
 
     grunt.registerTask("default", ["eslint"]);
 };

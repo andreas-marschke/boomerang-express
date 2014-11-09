@@ -26,7 +26,7 @@
 	"echo 'DONE'"
     ],
     "files" : [{
-	"src":  ["lib/*/*.js","app.js","public/*.png", "public/*.gif", "public/*.ico", "lib/backends/*/*.js"],
+	"src":  ["lib/*/*.js","app.js","public/*", "lib/backends/*/*.js"],
 	"dest" : "/opt/boomerang-express/",
 	"owner": "boomerang",
 	"group": "boomerang",

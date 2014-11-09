@@ -62,6 +62,7 @@
     "grunt-easy-rpm": "~1.4.0",
     "grunt-eslint": "^2.0.0",
     "grunt-exec": "~0.4.6",
+    "grunt-mocha": "^0.4.11",
     "mocha": "^2.0.1",
     "shortid": "~2.0.1"
   },
