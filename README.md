@@ -1,6 +1,8 @@
+![Logo](docs/assets/img/png/logo.png "Logo")
+
 # Boomerang-Express
 
-> Choo Choo
+A recieving server for [boomerangjs](https://github.com/lognormal/boomerang) beacon data and structured storage.
 
 ## Usage
 
@@ -16,7 +18,7 @@ Your webpage code may look like this:
       BOOMR.init({
         beacon_url: "//<boomerang-express server>/beacon/0000",
         DNS : {
-          base_url: "//<boomerang-express server>/"
+          base_url: "//*.<boomerang-express server>/"
         }, 
         RT: {
           cookie: "cookie-rt", 
@@ -140,5 +142,3 @@ file into your repository.
 ---
 
 Setting up for development and more tips visit our [development documentation](docs/index.md)
-
-

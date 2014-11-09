@@ -202,3 +202,5 @@ $> rpm -vi boomerang-express-0.0.1.noarch.rpm
 
 Once this is done you can edit the configuration of boomerang-express prior to
 the server starting.
+
+### Configuration
