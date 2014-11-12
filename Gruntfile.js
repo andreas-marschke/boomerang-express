@@ -24,7 +24,7 @@ module.exports = function (grunt) {
 	},
 	exec: {
 	    lint: {
-		command: "(which rpmlint && rpmlint --file=.rpmlintrc <%= pkg.name %>-<%= pkg.version%>-<%= pkg.release %>.<%= easy_rpm.options.buildArch %>.rpm) || exit -1",
+		command: "(which rpmlint && rpmlint --file=.rpmlintrc <%= pkg.name %>-<%= pkg.versiono %>-<%= easy_rpm.options.release%>.<%= easy_rpm.options.buildArch %>.rpm) || exit -1",
 		stdErr: true,
 		stdOut: true,
 		exitCode: 0
@@ -40,12 +40,12 @@ module.exports = function (grunt) {
 		group: "System Environment/Daemons",
 		version: "<%= pkg.version %>",
 		url: "<%= pkg.homepage %>",
-		release: "<%= pkg.release %>.git<%grunt.today('yyyymmdd')%>",
+		release: "<%= pkg.release %>.<%= grunt.template.today('yyyymmdd').toString() %>",
 		buildArch: "noarch",
 		dependencies: ["nodejs >= 0.10.32", "git", "npm >= 1.3.6", "shadow-utils"],
 		keepTemp: true,
 		changelog: [
-		    "* Sat Oct 25 2014 Andreas Marschke <andreas.marschke@gmail.com> 0.0.1-1",
+		    "* <%= grunt.template.today('ddd mmm dd yyyy') %> Andreas Marschke <andreas.marschke@gmail.com> <%= easy_rpm.options.version %>-<%= easy_rpm.options.release %>",
 		    "- initial package"
 		],
 		preInstallScript: rpm.preinst,
