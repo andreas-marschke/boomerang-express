@@ -24,10 +24,15 @@ module.exports = function (grunt) {
 	},
 	exec: {
 	    lint: {
-		command: "(which rpmlint && rpmlint --file=.rpmlintrc <%= pkg.name %>-<%= pkg.versiono %>-<%= easy_rpm.options.release%>.<%= easy_rpm.options.buildArch %>.rpm) || exit -1",
+		command: "(which rpmlint && rpmlint --file=.rpmlintrc <%= pkg.name %>-<%= pkg.version %>-<%= easy_rpm.options.release%>.<%= easy_rpm.options.buildArch %>.rpm) || exit -1",
 		stdErr: true,
 		stdOut: true,
 		exitCode: 0
+	    }
+	},
+	testdb: {
+	    options: {
+		directory: "data~"
 	    }
 	},
 	easy_rpm: {
@@ -58,6 +63,22 @@ module.exports = function (grunt) {
 	    }
 	}
     });
+
+    grunt.registerTask("testdb","Setup test database for filter development",function(name,conf) {
+	var config = this.options() || {};
+
+	var collections = [ "beacon_0000", "click_0000", "resource_0000" ];
+
+	if (typeof config.directory === "undefined") {
+	    config.directory = "data";
+	}
+
+	grunt.file.mkdir(config.directory);
+	for (var collection in collections) {
+	    grunt.file.write(config.directory + "/" + collections[collection] + ".db","");
+	}
+    });
+
     grunt.loadNpmTasks("grunt-exec");
     grunt.loadNpmTasks("grunt-contrib-clean");
 
