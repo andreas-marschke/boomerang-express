@@ -40,7 +40,7 @@ module.exports = function (grunt) {
 		group: "System Environment/Daemons",
 		version: "<%= pkg.version %>",
 		url: "<%= pkg.homepage %>",
-		release: "<%= pkg.release %>",
+		release: "<%= pkg.release %>.git<%grunt.today('yyyymmdd')%>",
 		buildArch: "noarch",
 		dependencies: ["nodejs >= 0.10.32", "git", "npm >= 1.3.6", "shadow-utils"],
 		keepTemp: true,
