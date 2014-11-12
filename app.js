@@ -27,7 +27,7 @@ if ( typeof config.server === "undefined" ) {
 var datastoreLogger = bunyan.createLogger({
     name: "boomerang-express-datastore",
     immediate: true,
-    streams:  [{
+    streams: [{
 	stream: process.stdout,
 	level: config.log.datastore.level.toString() || "debug"
     }]
@@ -36,7 +36,7 @@ var datastoreLogger = bunyan.createLogger({
 var filterLogger = bunyan.createLogger({
     name: "boomerang-express-filter",
     immediate: true,
-    streams:  [{
+    streams: [{
 	stream: process.stdout,
 	level: config.log.filter.level.toString() || "debug"
     }]
@@ -45,13 +45,13 @@ var filterLogger = bunyan.createLogger({
 var appLogger = bunyan.createLogger({
     name: "boomerang-express-application",
     immediate: true,
-    streams:  [{
+    streams: [{
 	stream: process.stdout,
 	level: config.log.application.level.toString() || "debug"
     }]
 });
 
-var ds = new Backends(config.datastore, datastoreLogger).on("open",main)
+new Backends(config.datastore, datastoreLogger).on("open",main)
     .on("dbOpenError",handleError)
     .on("error",handleError);
 
@@ -64,7 +64,7 @@ function main(dsInstance) {
 
 
     app.use(new Middlewares(config));
-    app.use(function(req,res,next) {
+    app.use(function(req, res, next) {
 	res.ds = dsInstance;
 	res.log = appLogger;
 	res.filter = new Filters(config.filter, filterLogger);
