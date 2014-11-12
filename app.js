@@ -9,72 +9,83 @@ var conf = require("node-conf"),
     express = require("express"),
     Filters = require("./lib/filters"),
     Middlewares = require("./lib/middlewares"),
-    Backends = require("./lib/backends");
+    Backends = require("./lib/backends"),
+    Boomerang = require("./lib/boomerang"),
+    routes = require("./lib/routes");
 
 var config = conf.load(process.env.NODE_ENV);
 var app = express();
 
-var streams = [{
-    stream: process.stdout,
-    level: "debug"
-}];
+
+
+if ( typeof config.server === "undefined" ) {
+    var error = new Error("Error could not parse configuration!");
+    console.error(error);
+    process.exit(1);
+}
 
 var datastoreLogger = bunyan.createLogger({
     name: "boomerang-express-datastore",
     immediate: true,
-    streams: streams
+    streams:  [{
+	stream: process.stdout,
+	level: config.log.datastore.level.toString() || "debug"
+    }]
 });
 
 var filterLogger = bunyan.createLogger({
     name: "boomerang-express-filter",
     immediate: true,
-    streams: streams
+    streams:  [{
+	stream: process.stdout,
+	level: config.log.filter.level.toString() || "debug"
+    }]
 });
 
 var appLogger = bunyan.createLogger({
     name: "boomerang-express-application",
-    immediate: false,
-    streams: streams
+    immediate: true,
+    streams:  [{
+	stream: process.stdout,
+	level: config.log.application.level.toString() || "debug"
+    }]
 });
-
-// combine all the servers listed in configuration into one big server-url
-if ( typeof config.server === "undefined" ) {
-    var error = new Error("Error could not parse configuration!");
-    appLogger.error(error);
-    process.exit(1);
-}
 
 var ds = new Backends(config.datastore, datastoreLogger).on("open",main)
     .on("dbOpenError",handleError)
     .on("error",handleError);
 
 function handleError(error) {
-    datastoreLogger.error( error );
+    datastoreLogger.fatal( { error: error }, error);
     process.exit();
 }
 
-function main() {
+function main(dsInstance) {
+
+
     app.use(new Middlewares(config));
-    var filter = new Filters(config.data,filterLogger);
-
-    app.settings.ds = ds;
-    app.settings.log = appLogger;
-    app.settings.filter = filter;
-
-    var routes = require("./lib/routes");
+    app.use(function(req,res,next) {
+	res.ds = dsInstance;
+	res.log = appLogger;
+	res.filter = new Filters(config.filter, filterLogger);
+	next();
+    });
+    app.use(Boomerang);
     app.use(routes);
 
-    config.server.listeners.forEach(startListener,app);
+
+
+
+    config.server.listeners.forEach(startListener);
 }
 
 function postStartup () {
-    app.settings.log.info("Server Started");
     if(typeof config.security !== "undefined") {
-	app.settings.log.info({context: config.security},"Dropping to security context " + (config.security.user || "boomerang") + ":" + (config.security.group || "boomerang"));
+	appLogger.info({context: config.security},"Dropping to security context " + (config.security.user || "boomerang") + ":" + (config.security.group || "boomerang"));
 	process.setgid(config.security.group || "boomerang");
 	process.setuid(config.security.user || "boomerang");
     } else {
-	app.settings.log.info({context: { user: "boomerang", group: "boomerang" }},"Dropping to security context boomerang:boomerang");
+	appLogger.info({context: { user: "boomerang", group: "boomerang" }},"Dropping to security context boomerang:boomerang");
 	process.setgid("boomerang");
 	process.setuid("boomerang");
     }
@@ -82,22 +93,24 @@ function postStartup () {
 
 function startListener(listener) {
     if (listener.protocol === "http" ) {
-	httpListener(listener,this);
+	appLogger.info({ listener: listener }, "Starting HTTP Application Server");
+	httpListener(listener);
     } else if (listener.protocol === "https" ) {
-	httpsListener(listener,this);
+	appLogger.info({ listener: listener }, "Starting HTTPS Application Server");
+	httpsListener(listener);
     }
 }
 
-function httpListener (listener, application) {
-    var server = http.createServer(application);
+function httpListener (listener) {
+    var server = http.createServer(app);
     server.listen(listener.port, listener.listen, postStartup);
 }
 
-function httpsListener (listener, application) {
+function httpsListener (listener) {
     var server = https.createServer({
 	key: fs.readFileSync(path.resolve(listener.key)),
 	cert: fs.readFileSync(path.resolve(listener.cert))
-    },application);
+    },app);
 
     server.listen(listener.port, listener.listen, postStartup);
 }
