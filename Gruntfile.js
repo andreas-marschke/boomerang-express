@@ -12,6 +12,7 @@ module.exports = function (grunt) {
 		format: "compact"
 	    },
 	    target: [
+		"tasks/*.js",
 		"Gruntfile.js",
 		"app.js",
 		"lib/*/*.js",
@@ -65,7 +66,7 @@ module.exports = function (grunt) {
 	}
     });
 
-    grunt.loadTasks('tasks');
+    grunt.loadTasks("tasks");
 
     grunt.loadNpmTasks("grunt-exec");
     grunt.loadNpmTasks("grunt-contrib-clean");
