@@ -14,17 +14,7 @@
 	"echo 'DONE'"
     ],
     "preun": [ "chkconfig --del boomerang-express" ],
-    "postun" : [
-	"echo 'Post-UnInstallation Procedure:'",
-	"echo ' - delete system boomerang'",
-	"echo ' - delete empty directories'",
-	"rmdir -p /usr/share/doc/boomerang-express",
-	"rm -rf /opt/boomerang-express/lib",
-	"rm -rf /opt/boomerang-express/public",
-		    "echo ' - delete node_modules'",
-	"rm -rf /opt/boomerang-express/node_modules",
-	"echo 'DONE'"
-    ],
+    "postun" : [ ],
     "files" : [{
 	"src":  ["lib/*/*.js","app.js","public/*", "lib/backends/*/*.js"],
 	"dest" : "/opt/boomerang-express/",
