@@ -3,6 +3,7 @@
 module.exports = function (grunt) {
 
     var rpm = grunt.file.readJSON("rpm.json");
+    var serverConfig = grunt.file.readJSON("config/master.json");
 
     grunt.initConfig({
 	pkg: grunt.file.readJSON("package.json"),
@@ -30,9 +31,9 @@ module.exports = function (grunt) {
 		exitCode: 0
 	    }
 	},
-	testdb: {
+	developer: {
 	    options: {
-		directory: "data~"
+		directory: serverConfig.datastore.nedb.directory
 	    }
 	},
 	easy_rpm: {
@@ -64,20 +65,7 @@ module.exports = function (grunt) {
 	}
     });
 
-    grunt.registerTask("testdb","Setup test database for filter development",function(name,conf) {
-	var config = this.options() || {};
-
-	var collections = [ "beacon_0000", "click_0000", "resource_0000" ];
-
-	if (typeof config.directory === "undefined") {
-	    config.directory = "data";
-	}
-
-	grunt.file.mkdir(config.directory);
-	for (var collection in collections) {
-	    grunt.file.write(config.directory + "/" + collections[collection] + ".db","");
-	}
-    });
+    grunt.loadTasks('tasks');
 
     grunt.loadNpmTasks("grunt-exec");
     grunt.loadNpmTasks("grunt-contrib-clean");
