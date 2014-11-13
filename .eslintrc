@@ -11,6 +11,7 @@
 	"no-underscore-dangle":1,
 	"quotes":[2, "double"],
 	"space-infix-ops":0,
+	"key-spacing":0,
 	"strict":1
     },
     "env": {
