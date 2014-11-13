@@ -1,4 +1,5 @@
-var merge = require('deepmerge'),
+"use strict";
+var merge = require("deepmerge"),
     path = require("path");
 
 module.exports = function(grunt) {
@@ -27,11 +28,11 @@ module.exports = function(grunt) {
 
     };
 
-    grunt.registerTask("developer","Setup test database for filter development for use with nedb",function(name,conf) {
-	var done = this.async();
+    grunt.registerTask("developer","Setup test database for filter development for use with nedb",function() {
+
 	var gruntConfig = this.options() || {};
 	var jsonConfig = grunt.file.readJSON("tasks/developer.config.json");
-	var config = merge(jsonConfig, gruntConfig);
+	var config = merge(defaultConfig, gruntConfig, jsonConfig);
 
 	grunt.file.mkdir(config.directory);
 
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
 	    collection.types.forEach(function(type) {
 		grunt.file.write(config.directory + path.sep + type + "_" + collection.owner + ".db","");
 	    });
-	})
+	});
 
 	// store config data for users and webcollections in seperate collections
 	// nedb is slightly "special" so we have to split these and concat
@@ -55,8 +56,8 @@ module.exports = function(grunt) {
 	config.webcollections.forEach(function(collection) {
 	    webcollectionsContent += JSON.stringify(collection);
 	});
-	grunt.file.write(config.directory + path.sep + "/webcollections.db", webcollectionsContent );
+	grunt.file.write(config.directory + path.sep + "webcollections.db", webcollectionsContent );
 
     });
 
-}
+};
