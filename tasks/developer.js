@@ -58,6 +58,15 @@ module.exports = function(grunt) {
 	});
 	grunt.file.write(config.directory + path.sep + "webcollections.db", webcollectionsContent );
 
+	grunt.log.write("You're all set please add these lines to your config/development.json under the 'datastore' key:\n");
+	grunt.log.write(JSON.stringify({
+	    "active": "nedb",
+	    "nedb" : {
+		"directory": config.directory,
+		"inMemoryOnly" : false,
+		"autoload": false
+	    }
+	},undefined,2));
     });
 
 };
