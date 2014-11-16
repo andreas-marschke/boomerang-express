@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 
 	var gruntConfig = this.options() || {};
 	var jsonConfig = grunt.file.readJSON("tasks/developer.config.json");
-	var config = merge(defaultConfig, gruntConfig, jsonConfig);
+	var config = merge(defaultConfig, jsonConfig);
 
 	grunt.file.mkdir(config.directory);
 
