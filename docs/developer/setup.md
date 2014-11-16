@@ -85,7 +85,7 @@ Usually the contents look like this:
 ```
 
 Where directory is the directory you want to store your database in.
-For an explanation of the other keys (`webcollections`, `users`) see the [database design documentation](database.md).
+For an explanation of the other keys (`webcollections`, `users`) see the [How it works](../../user/backends/mongodb.md#how-it-works) section.
 
 ## Start the server
 
