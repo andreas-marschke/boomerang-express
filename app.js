@@ -1,5 +1,5 @@
 "use strict";
-// requirements
+
 var conf = require("node-conf"),
     http = require("http"),
     https = require("https"),
@@ -15,8 +15,6 @@ var conf = require("node-conf"),
 
 var config = conf.load(process.env.NODE_ENV);
 var app = express();
-
-
 
 if ( typeof config.server === "undefined" ) {
     var error = new Error("Error could not parse configuration!");
@@ -62,19 +60,17 @@ function handleError(error) {
 
 function main(dsInstance) {
 
-
     app.use(new Middlewares(config));
+
     app.use(function(req, res, next) {
 	res.ds = dsInstance;
 	res.log = appLogger;
 	res.filter = new Filters(config.filter, filterLogger);
+
 	next();
     });
     app.use(Boomerang);
     app.use(routes);
-
-
-
 
     config.server.listeners.forEach(startListener);
 }
