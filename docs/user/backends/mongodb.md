@@ -41,7 +41,7 @@ where the keys and values are to be understood as so:
 - `via`: authentication source the user came from. This is interesting to youf
 you want to use multiple autentication sources to your frontend to exist.
 
-### `db.collections` collection
+### `db.webcollections` collection
 
 Here a document may look like this:
 
