@@ -62,10 +62,12 @@ function main(dsInstance) {
 
     app.use(new Middlewares(config));
 
+    var filters = new Filters(config.filter, filterLogger);
+
     app.use(function(req, res, next) {
 	res.ds = dsInstance;
 	res.log = appLogger;
-	res.filter = new Filters(config.filter, filterLogger);
+	res.filter = filters;
 
 	next();
     });
