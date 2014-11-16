@@ -1,9 +1,7 @@
 "use strict";
 
 module.exports = function (grunt) {
-
     var rpm = grunt.file.readJSON("rpm.json");
-    var serverConfig = grunt.file.readJSON("config/master.json");
 
     grunt.initConfig({
 	pkg: grunt.file.readJSON("package.json"),
@@ -32,11 +30,7 @@ module.exports = function (grunt) {
 		exitCode: 0
 	    }
 	},
-	developer: {
-	    options: {
-		directory: serverConfig.datastore.nedb.directory
-	    }
-	},
+	developer: {},
 	easy_rpm: {
 	    options: {
 		name: "<%= pkg.name %>",
