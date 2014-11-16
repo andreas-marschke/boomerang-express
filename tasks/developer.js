@@ -30,7 +30,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask("developer","Setup test database for filter development for use with nedb",function() {
 
-	var gruntConfig = this.options() || {};
 	var jsonConfig = grunt.file.readJSON("tasks/developer.config.json");
 	var config = merge(defaultConfig, jsonConfig);
 
