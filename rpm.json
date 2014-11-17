@@ -1,5 +1,4 @@
 {
-
     "preinst" : [
 	"echo 'Pre-Installation Procedure:'",
 	"echo ' - unless already exists add system-user \"boomerang\"'",
@@ -14,9 +13,11 @@
 	"echo 'DONE'"
     ],
     "preun": [ "chkconfig --del boomerang-express" ],
-    "postun" : [ ],
+    "postun" : [
+	"rm -rf /opt/boomerang-express/node_modules"
+    ],
     "files" : [{
-	"src":  ["lib/*/*.js","app.js","public/*", "lib/backends/*/*.js"],
+	"src": ["lib/*/*.js", "app.js", "public/*", "lib/backends/*/*.js", "Gruntfile.js"],
 	"dest" : "/opt/boomerang-express/",
 	"owner": "boomerang",
 	"group": "boomerang",
@@ -28,13 +29,19 @@
 	"group": "boomerang",
 	"mode": "644"
     },{
-	"src":  ["config/*"],
+	"src": ["config/*.example"],
 	"dest": "/opt/boomerang-express/",
 	"owner": "root",
 	"group": "boomerang",
 	"mode": "644"
     },{
-	"src":  "boomerang-express",
+	"src": ["tasks/*.js","tasks/*.example"],
+	"dest": "/opt/boomerang-express/",
+	"owner": "root",
+	"group": "boomerang",
+	"mode": "644"
+    },{
+	"src": "boomerang-express",
 	"dest": "/etc/rc.d/init.d/",
 	"cwd": "etc/init.d",
 	"owner": "root",
@@ -70,3 +77,4 @@
 	"cwd": "./"
     }]
 }
+
