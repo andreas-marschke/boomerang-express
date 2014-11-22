@@ -1,80 +1,107 @@
 {
-    "preinst" : [
-	"echo 'Pre-Installation Procedure:'",
-	"echo ' - unless already exists add system-user \"boomerang\"'",
-	"getent passwd boomerang >/dev/null || useradd --base-dir /opt --home-dir /opt/boomerang-express --no-log-init --system --shell /sbin/nologin --no-create-home boomerang || true",
-	"echo 'DONE'"
+    "preinst": [
+        "echo 'Pre-Installation Procedure:'",
+        "getent passwd boomerang >/dev/null || useradd --base-dir /opt --home-dir /opt/boomerang-express --no-log-init --system --shell /sbin/nologin --no-create-home boomerang || true",
+        "echo 'DONE'"
     ],
     "postinst": [
-	"echo 'Post-Installation Procedure:'",
-	"echo ' - installing package-dependencies into /opt/boomerang-express/node_modules'",
-	"cd /opt/boomerang-express && npm install . --cache-min=1 --cache-max=2 --rollback true --color false",
-	"chkconfig --add boomerang-express",
-	"echo 'DONE'"
+        "echo 'Post-Installation Procedure:'",
+        "chkconfig --add boomerang-express",
+        "echo 'DONE'"
     ],
-    "preun": [ "chkconfig --del boomerang-express" ],
-    "postun" : [
-	"rm -rf /opt/boomerang-express/node_modules"
+    "post": [
+        "INSTALL=1",
+        "UPGRADE=2",
+        "if [ $1 -eq $UPGRADE || $1 -eq $INSTALL ]; then",
+        "cd /opt/boomerang-express && npm install . --cache-min=1 --cache-max=2 --rollback true --color false",
+        "fi"
     ],
-    "files" : [{
-	"src": ["lib/*/*.js", "app.js", "public/*", "lib/backends/*/*.js", "Gruntfile.js"],
-	"dest" : "/opt/boomerang-express/",
-	"owner": "boomerang",
-	"group": "boomerang",
-	"mode": "644"
-    },{
-	"src": ["package.json"],
-	"dest": "/opt/boomerang-express/",
-	"owner": "boomerang",
-	"group": "boomerang",
-	"mode": "644"
-    },{
-	"src": ["config/*.example"],
-	"dest": "/opt/boomerang-express/",
-	"owner": "root",
-	"group": "boomerang",
-	"mode": "644"
-    },{
-	"src": ["tasks/*.js","tasks/*.example"],
-	"dest": "/opt/boomerang-express/",
-	"owner": "root",
-	"group": "boomerang",
-	"mode": "644"
-    },{
-	"src": "boomerang-express",
-	"dest": "/etc/rc.d/init.d/",
-	"cwd": "etc/init.d",
-	"owner": "root",
-	"group": "root",
-	"mode": "755"
-    },{
-	"src":  "boomerang-express",
-	"dest": "/etc/default/",
-	"cwd": "etc/default",
-	"owner": "root",
-	"group": "root",
-	"mode": "644"
-    },{
-	"src":  "boomerang-express",
-	"dest": "/etc/logrotate.d/",
-	"cwd": "etc/logrotate.d",
-	"owner": "root",
-	"group": "root",
-	"mode": "644"
-    },{
-	"src": [
-	    "README.md",
-	    "docs/*",
-	    "docs/assets/img/*",
-	    "docs/assets/img/*/*",
-	    "docs/user/backends/*",
-	    "docs/developer/*",
-	    "docs/user/*",
-	    "docs/user/backends/*"
-	],
-	"dest": "/usr/share/doc/boomerang-express",
-	"doc": true,
-	"cwd": "./"
-    }]
+    "preun": [
+        "chkconfig --del boomerang-express"
+    ],
+    "postun": [
+        "rm -rf /opt/boomerang-express/node_modules"
+    ],
+    "files": [
+        {
+            "src": [
+                "lib/*/*.js",
+                "app.js",
+                "public/*",
+                "lib/backends/*/*.js",
+                "Gruntfile.js"
+            ],
+            "dest": "/opt/boomerang-express/",
+            "owner": "boomerang",
+            "group": "boomerang",
+            "mode": "644"
+        },
+        {
+            "src": [
+                "package.json"
+            ],
+            "dest": "/opt/boomerang-express/",
+            "owner": "boomerang",
+            "group": "boomerang",
+            "mode": "644"
+        },
+        {
+            "src": [
+                "config/*.example"
+            ],
+            "dest": "/opt/boomerang-express/",
+            "owner": "root",
+            "group": "boomerang",
+            "mode": "644"
+        },
+        {
+            "src": [
+                "tasks/*.js",
+                "tasks/*.example"
+            ],
+            "dest": "/opt/boomerang-express/",
+            "owner": "root",
+            "group": "boomerang",
+            "mode": "644"
+        },
+        {
+            "src": "boomerang-express",
+            "dest": "/etc/rc.d/init.d/",
+            "cwd": "etc/init.d",
+            "owner": "root",
+            "group": "root",
+            "mode": "755"
+        },
+        {
+            "src": "boomerang-express",
+            "dest": "/etc/default/",
+            "cwd": "etc/default",
+            "owner": "root",
+            "group": "root",
+            "mode": "644"
+        },
+        {
+            "src": "boomerang-express",
+            "dest": "/etc/logrotate.d/",
+            "cwd": "etc/logrotate.d",
+            "owner": "root",
+            "group": "root",
+            "mode": "644"
+        },
+        {
+            "src": [
+                "README.md",
+                "docs/*",
+                "docs/assets/img/*",
+                "docs/assets/img/*/*",
+                "docs/user/backends/*",
+                "docs/developer/*",
+                "docs/user/*",
+                "docs/user/backends/*"
+            ],
+            "dest": "/usr/share/doc/boomerang-express",
+            "doc": true,
+            "cwd": "./"
+        }
+    ]
 }
-
