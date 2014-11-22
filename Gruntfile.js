@@ -13,14 +13,33 @@ module.exports = function (grunt) {
 		"tasks/*.js",
 		"Gruntfile.js",
 		"app.js",
-		"lib/*/*.js",
-		"lib/backends/*/*"
+		"lib/**/*.js",
+		"lib/backends/**/*",
+		"tests/**/*.js"
 	    ]
 	},
 	clean: {
 	    options: {},
 	    src: ["lib/routes/*~", "*.js~"],
 	    rpmTmp: ["tmp-*"]
+	},
+	mochaTest: {
+	    test: {
+		options: {
+		    reporter: "spec",
+		    quiet: false,
+		    clearRequireCache: true
+		},
+		src: ["tests/*.js"]
+	    },
+	    "html-cov": {
+		options: {
+		    reporter: "html-cov",
+		    quiet: true,
+		    captureFile: "tests/coverage.html"
+		},
+		src: ["tests/*.js"]
+	    }
 	},
 	exec: {
 	    lint: {
@@ -64,15 +83,11 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks("grunt-exec");
     grunt.loadNpmTasks("grunt-contrib-clean");
-
     grunt.loadNpmTasks("grunt-eslint");
-
-    // Linting using rpmlint
-    grunt.registerTask("rpmLint", ["exec:lint"]);
-    grunt.registerTask("rpmTmpClean", ["clean:rpmTmp"]);
-
     grunt.loadNpmTasks("grunt-easy-rpm");
-    grunt.registerTask("rpm", ["rpmTmpClean", "easy_rpm", "rpmLint"]);
+    grunt.loadNpmTasks("grunt-mocha-test");
 
+    grunt.registerTask("rpm", ["clean:rpmTmp", "easy_rpm", "exec:lint"]);
+    grunt.registerTask("test", ["eslint:tests"], ["mochaTest"]);
     grunt.registerTask("default", ["eslint"]);
 };
