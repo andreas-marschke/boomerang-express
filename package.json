@@ -26,7 +26,8 @@
   ],
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "mocha tests/"
   },
   "optionalDependencies": {
     "nedb": "^0.11.1"
@@ -40,6 +41,8 @@
     "express-bunyan-logger": "^1.1.0",
     "forever": ">= 0.10.8",
     "heapdump": "^0.2.10",
+    "helmet": "^0.5.2",
+    "lodash": "^2.4.1",
     "mongodb": ">= 2.0.5",
     "node-conf": ">= 0.0.5",
     "serve-static": "^1.6.3",
@@ -54,6 +57,7 @@
   },
   "readmeFilename": "README.md",
   "devDependencies": {
+    "blanket": "^1.1.6",
     "chai": "^1.9.2",
     "grunt": "~0.4.5",
     "grunt-cli": "~0.1.13",
@@ -61,7 +65,7 @@
     "grunt-easy-rpm": "~1.4.0",
     "grunt-eslint": "^2.0.0",
     "grunt-exec": "~0.4.6",
-    "grunt-mocha": "^0.4.11",
+    "grunt-mocha-test": "^0.12.3",
     "mocha": "^2.0.1",
     "shortid": "~2.0.1"
   },
