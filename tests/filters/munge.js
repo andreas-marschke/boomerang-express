@@ -70,6 +70,28 @@ describe("munge()", function() {
 	delete actual.created;
 	delete actual.ip;
 	assert.deepEqual(actual, expected);
+    });
+
+    it("Should sanitze cookies should they have dots in them using inflate", function(){
+
+	var Filters = require("../../lib/filters");
+	var filters = new Filters({dnt: true }, SilentLogger);
+
+	var cookies = { "boomerang.sig": "abc" },
+	    expected = {
+		agent: {},
+		cookies: { boomerang: { sig: "abc"}},
+		customTiming: {},
+		headers: {}
+	    };
+
+	var actual = filters.munge({},{},{},"",{}, cookies);
+
+	delete actual.created;
+	delete actual.ip;
+
+	assert.deepEqual(actual.cookies, expected.cookies);
+
 
     });
 });
