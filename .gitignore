@@ -3,6 +3,7 @@
 node_modules*
 tmp-*
 *.rpm
+config/*.json
 tests/backends/configs.js
 tasks/developer.config.json
-config/master.json
+tests/coverage.html
