@@ -7,3 +7,5 @@ config/*.json
 tests/backends/configs.js
 tasks/developer.config.json
 tests/coverage.html
+log/*
+npm-debug.log*
