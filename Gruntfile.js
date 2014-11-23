@@ -1,5 +1,5 @@
 "use strict";
-
+/* eslint-disable camelcase */
 module.exports = function (grunt) {
     var rpm = grunt.file.readJSON("rpm.json");
 
@@ -28,7 +28,17 @@ module.exports = function (grunt) {
 		options: {
 		    reporter: "spec",
 		    quiet: false,
-		    clearRequireCache: true
+		    clearRequireCache: true,
+		    gc: true
+		},
+		src: ["tests/*.js"]
+	    },
+	    auto: {
+		options: {
+		    reporter: "tap",
+		    quiet: false,
+		    clearRequireCache: true,
+		    gc: true
 		},
 		src: ["tests/*.js"]
 	    },
@@ -88,6 +98,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-mocha-test");
 
     grunt.registerTask("rpm", ["clean:rpmTmp", "easy_rpm", "exec:lint"]);
-    grunt.registerTask("test", ["eslint:tests"], ["mochaTest"]);
+    grunt.registerTask("test", ["eslint"], ["mochaTest:auto"]);
     grunt.registerTask("default", ["eslint"]);
 };

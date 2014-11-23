@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = function(grunt) {
 
     grunt.registerTask("support","Write Support information as JSON to STDOUT",function() {

@@ -1,4 +1,5 @@
 "use strict";
+
 var merge = require("deepmerge"),
     path = require("path");
 

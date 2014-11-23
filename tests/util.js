@@ -1,3 +1,4 @@
+"use strict";
 /* mock logger to to prevent excessive logging to the console */
 
 module.exports = {

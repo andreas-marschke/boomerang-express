@@ -1,4 +1,6 @@
+"use strict";
 /* global it, describe */
+/* eslint-disable camelcase */
 
 var assert = require("chai").assert;
 var SilentLogger = require("../util");
