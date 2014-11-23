@@ -26,7 +26,7 @@
   ],
   "private": true,
   "scripts": {
-    "start": "node app.js",
+    "start": "forever --minUptime 1000ms --spinSleepTime 1000ms -l log/app.log -o log/stdout.log -e log/stderr.log -p . -a --pidFile log/forever.pid --sourceDir . --workingDir . --plain --watch --watchDirectory . --watchIgnore log/app.log  --watchIgnore log/stdout.log --watchIgnore log/stderr.log app.js",
     "test": "mocha tests/"
   },
   "optionalDependencies": {

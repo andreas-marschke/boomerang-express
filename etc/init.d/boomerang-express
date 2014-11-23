@@ -56,6 +56,8 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 DAEMON=$APP_PATH/node_modules/forever/bin/forever
 
+OPTS=--minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE --watch $APP_PATH $EXTRA_ARGS
+
 do_start() {
     
     if [ -e $LOCKFILE ]; then 
@@ -63,18 +65,18 @@ do_start() {
 	return 1
     fi
 
-    $DAEMON start -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || retval = $?
+    $DAEMON start $OPTS $APP_PATH/app.js || retval = $?
     
-    if [ ! -e $LOCKFILE ] && [ ! "$retval" = 1 ]; then
+    if [ ! -e $LOCKFILE ] && [ ! $retval = 1 ]; then
 	touch $LOCKFILE
     fi
 }
 
 do_stop() {
 
-    $DAEMON stop -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE  --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || retval = $?
+    $DAEMON stop $OPTS $APP_PATH/app.js || retval = $?
 
-    if [ -e $LOCKFILE ] && [ ! "$retval" =  1 ]; then
+    if [ -e $LOCKFILE ] && [ ! $retval =  1 ]; then
 	rm $LOCKFILE
     fi
 }
@@ -84,9 +86,9 @@ do_restart() {
 	rm $LOCKFILE
     fi
 
-    $DAEMON restart -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE  --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME $EXTRA_ARGS $APP_PATH/app.js || retval = $?
+    $DAEMON restart $OPTS $APP_PATH/app.js || retval = $?
     
-    if [ ! -e $LOCKFILE ] && [ ! "$retval" = "1" ]; then
+    if [ ! -e $LOCKFILE ] && [ ! $retval = 1 ]; then
 	touch $LOCKFILE
     fi
 }
@@ -120,4 +122,5 @@ case "$1" in
 esac
 
 :
+
 

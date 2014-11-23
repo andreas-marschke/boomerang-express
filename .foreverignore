@@ -6,5 +6,5 @@ tmp-*
 *.rpm
 tests/backends/configs.js
 tasks/developer.config.json
-config/master.json
 tests/coverage.html
+log*
