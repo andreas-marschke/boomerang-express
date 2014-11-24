@@ -56,7 +56,12 @@ SCRIPTNAME=/etc/init.d/$NAME
 
 DAEMON=$APP_PATH/node_modules/forever/bin/forever
 
-OPTS=--minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE --watch $APP_PATH $EXTRA_ARGS
+do_action() {
+
+    $DAEMON $1 --append --minUptime $MINUPTIME --spinSleepTime $SPINSLEEPTIME -m $MAX -l $LOG -o $STDOUT -e $STDERR -p $BASEPATH --pidFile $PIDFILE --watch $APP_PATH --watchDirectory $APP_PATH $EXTRA_ARGS $APP_PATH/app.js || retval=$?
+
+    return $retval
+}
 
 do_start() {
     
@@ -65,7 +70,7 @@ do_start() {
 	return 1
     fi
 
-    $DAEMON start $OPTS $APP_PATH/app.js || retval = $?
+    do_action start || retval=$?
     
     if [ ! -e $LOCKFILE ] && [ ! $retval = 1 ]; then
 	touch $LOCKFILE
@@ -74,7 +79,7 @@ do_start() {
 
 do_stop() {
 
-    $DAEMON stop $OPTS $APP_PATH/app.js || retval = $?
+    do_action "stop" || retval=$?
 
     if [ -e $LOCKFILE ] && [ ! $retval =  1 ]; then
 	rm $LOCKFILE
@@ -86,7 +91,7 @@ do_restart() {
 	rm $LOCKFILE
     fi
 
-    $DAEMON restart $OPTS $APP_PATH/app.js || retval = $?
+    do_action restart || retval=$?
     
     if [ ! -e $LOCKFILE ] && [ ! $retval = 1 ]; then
 	touch $LOCKFILE
