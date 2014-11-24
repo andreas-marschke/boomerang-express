@@ -1,13 +1,14 @@
 "use strict";
 /* global it, describe */
+/* eslint-disable no-unused-vars */
 
 var assert = require("chai").assert;
 var SilentLogger = require("../util");
 
 describe("Filters", function() {
     it("Should work on require()",function(){
-	/* eslint-disable no-unused-vars */
-	var Filters = require("../../lib/filters");
+
+	require("../../lib/filters");
     });
 
     it("Should instantiate a Filters Object", function(){
@@ -21,11 +22,11 @@ describe("Filters", function() {
 	var Filters = require("../../lib/filters");
 
 	var config = { foo: "bar" };
-	var config_expect = { foo: "bar", key: "abcdefghijklmnop" };
+	var configExpect = { foo: "bar", key: "abcdefghijklmnop" };
 
 	var filters = new Filters(config);
 
-	assert.deepEqual(filters.config, config_expect);
+	assert.deepEqual(filters.config, configExpect);
     });
 
     it("Should have a console.log object if no logger is given", function(){
@@ -48,7 +49,4 @@ describe("Filters", function() {
 
 	assert.equal(filters.safeNumeric(""),expected);
     });
-
-
-
 });
