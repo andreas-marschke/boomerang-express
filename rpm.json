@@ -7,14 +7,13 @@
     "postinst": [
         "echo 'Post-Installation Procedure:'",
         "chkconfig --add boomerang-express",
+        "cd /opt/boomerang-express && npm install . --cache-min=1 --cache-max=2 --rollback true --color false",
         "echo 'DONE'"
     ],
     "post": [
-        "INSTALL=1",
-        "UPGRADE=2",
-        "if [ $1 -eq $UPGRADE || $1 -eq $INSTALL ]; then",
-        "cd /opt/boomerang-express && npm install . --cache-min=1 --cache-max=2 --rollback true --color false",
-        "fi"
+      "INSTALL=1",
+      "UPGRADE=2",
+      "if [ $1 -eq 2 || $1 -eq 1 ]; then cd /opt/boomerang-express && npm install . --cache-min=1 --cache-max=2 --rollback true --color false; fi"
     ],
     "preun": [
         "chkconfig --del boomerang-express"
