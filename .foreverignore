@@ -4,7 +4,7 @@ tests/
 node_modules*
 tmp-*
 *.rpm
-tests/backends/configs.js
-tasks/developer.config.json
-tests/coverage.html
+tasks/*
+tests/*
 log*
+*.log
