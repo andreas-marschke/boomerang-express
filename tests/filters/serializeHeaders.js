@@ -2,7 +2,7 @@
 /* global it, describe */
 
 var assert = require("chai").assert;
-var SilentLogger = require("../util");
+var SilentLogger = require("../SilentLogger");
 
 describe("serializeHeaders()",  function() {
     it("Should fail gracefully if given null, undefined, '', {} or [] as headers", function(){

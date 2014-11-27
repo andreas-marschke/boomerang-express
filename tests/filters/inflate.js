@@ -2,7 +2,7 @@
 /* global it, describe */
 
 var assert = require("chai").assert;
-var SilentLogger = require("../util");
+var SilentLogger = require("../SilentLogger");
 
 describe("inflate()", function() {
     it("Should return an object with object values that are also objects", function(){

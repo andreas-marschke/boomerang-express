@@ -3,7 +3,7 @@
 /* eslint-disable camelcase */
 
 var assert = require("chai").assert;
-var SilentLogger = require("../util");
+var SilentLogger = require("../SilentLogger");
 
 describe("serializeTimers()", function() {
     it("Should serialize customtiming string", function(){

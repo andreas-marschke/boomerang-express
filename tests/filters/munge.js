@@ -2,7 +2,7 @@
 /* global it, describe */
 
 var assert = require("chai").assert;
-var SilentLogger = require("../util");
+var SilentLogger = require("../SilentLogger");
 
 describe("munge()", function() {
     it("Should return an empty object on calling munge with no arguments", function(){
