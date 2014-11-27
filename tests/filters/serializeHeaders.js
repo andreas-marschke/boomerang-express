@@ -4,7 +4,7 @@
 var assert = require("chai").assert;
 var SilentLogger = require("../SilentLogger");
 
-describe("serializeHeaders()",  function() {
+describe("Filters serializeHeaders():",  function() {
     it("Should fail gracefully if given null, undefined, '', {} or [] as headers", function(){
 	var Filters = require("../../lib/filters");
 	var filters = new Filters({}, SilentLogger);

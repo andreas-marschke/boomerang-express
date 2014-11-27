@@ -4,7 +4,7 @@
 var assert = require("chai").assert;
 var SilentLogger = require("../SilentLogger");
 
-describe("munge()", function() {
+describe("Filters munge():", function() {
     it("Should return an empty object on calling munge with no arguments", function(){
 	var Filters = require("../../lib/filters");
 	var filters = new Filters({}, SilentLogger);

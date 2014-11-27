@@ -5,7 +5,7 @@
 var assert = require("chai").assert;
 var SilentLogger = require("../SilentLogger");
 
-describe("Filters", function() {
+describe("Filters Core:", function() {
     it("Should work on require()",function(){
 
 	require("../../lib/filters");

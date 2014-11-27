@@ -8,7 +8,7 @@ var mockery = require("mockery"),
 var assert = require("chai").assert;
 var expect = require("chai").expect;
 
-describe("NeDB", function() {
+describe("Datastore Backend - NeDB:", function() {
 
     beforeEach(function(){
 	mockery.enable({
@@ -197,7 +197,7 @@ describe("NeDB", function() {
 	expect(backend.insert.bind(backend,"beacon", "0000")).to.throw(Error);
     });
 
-    it("Should insert empty object with key and value of the collection", function(done){
+    it("Should return an id string on insertion callback", function(done){
 
 	mockery.registerMock('fs', fixtures.fsMockEmpty);
 
@@ -213,9 +213,8 @@ describe("NeDB", function() {
 	var data = { };
 	var expected = {collection: "demo-webpage"};
 
-	backend.insert("beacon", "0000", "demo-webpage", data, function(err, docs) {
-	    delete docs._id;
-	    assert.deepEqual(docs, { collection: "demo-webpage" });
+	backend.insert("beacon", "0000", "demo-webpage", data, function(id) {
+	    assert.isString(id);
 	    done();
 	});
     });

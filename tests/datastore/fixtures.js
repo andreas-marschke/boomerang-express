@@ -77,6 +77,9 @@ module.exports = {
     pathMockWebcollections:  {
 	resolve: function() {
 	    return "/some/path/that/doesn't/exist";
+	},
+	dirname: function() {
+	    return "/some/path/that/doesn't/exist";
 	}
     },
     fsMockWebcollections: {

@@ -12,6 +12,7 @@ module.exports = function (grunt) {
 	"tests/filters/serializeHeaders.js",
 	"tests/filters/serializeTimers.js",
 	"tests/datastore/index.js",
+	"tests/datastore/validation.js",
 	"tests/datastore/nedb/index.js"
     ];
 

@@ -4,7 +4,7 @@
 var assert = require("chai").assert;
 var SilentLogger = require("../SilentLogger");
 
-describe("inflate()", function() {
+describe("Filters inflate():", function() {
     it("Should return an object with object values that are also objects", function(){
 	var Filters = require("../../lib/filters");
 	var filters = new Filters({}, SilentLogger);

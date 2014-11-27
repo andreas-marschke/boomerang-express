@@ -9,9 +9,8 @@ var conf = require("node-conf"),
     express = require("express"),
     Filters = require("./lib/filters"),
     Middlewares = require("./lib/middlewares"),
-    Backends = require("./lib/backends"),
-    Boomerang = require("./lib/boomerang"),
-    routes = require("./lib/routes");
+    Datastore = require("./lib/datastore"),
+    Boomerang = require("./lib/boomerang");
 
 var config = conf.load(process.env.NODE_ENV);
 var app = express();
@@ -24,7 +23,7 @@ if ( typeof config.server === "undefined" ) {
 
 var datastoreLogger = bunyan.createLogger({
     name: "boomerang-express-datastore",
-    immediate: true,
+    immediate: false,
     streams: [{
 	stream: process.stdout,
 	level: config.log.datastore.level.toString() || "debug"
@@ -33,7 +32,7 @@ var datastoreLogger = bunyan.createLogger({
 
 var filterLogger = bunyan.createLogger({
     name: "boomerang-express-filter",
-    immediate: true,
+    immediate: false,
     streams: [{
 	stream: process.stdout,
 	level: config.log.filter.level.toString() || "debug"
@@ -42,16 +41,12 @@ var filterLogger = bunyan.createLogger({
 
 var appLogger = bunyan.createLogger({
     name: "boomerang-express-application",
-    immediate: true,
+    immediate: false,
     streams: [{
 	stream: process.stdout,
 	level: config.log.application.level.toString() || "debug"
     }]
 });
-
-new Backends(config.datastore, datastoreLogger).on("open",main)
-    .on("dbOpenError",handleError)
-    .on("error",handleError);
 
 function handleError(error) {
     datastoreLogger.fatal( { error: error }, error);
@@ -63,16 +58,9 @@ function main(dsInstance) {
     app.use(new Middlewares(config));
 
     var filters = new Filters(config.filter, filterLogger);
+    var boomerang = new Boomerang(config, dsInstance, filters, appLogger);
 
-    app.use(function(req, res, next) {
-	res.ds = dsInstance;
-	res.log = appLogger;
-	res.filter = filters;
-
-	next();
-    });
-    app.use(Boomerang);
-    app.use(routes);
+    app.use(boomerang.router());
 
     config.server.listeners.forEach(startListener);
 }
@@ -111,4 +99,13 @@ function httpsListener (listener) {
     },app);
 
     server.listen(listener.port, listener.listen, postStartup);
+}
+
+
+var ds = new Datastore(config.datastore, datastoreLogger);
+
+if (ds.init(config.datastore.active)) {
+    main(ds);
+} else {
+    handleError(new Error("Could not initialize the Datastore"));
 }

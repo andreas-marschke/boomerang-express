@@ -5,7 +5,7 @@
 var assert = require("chai").assert;
 var SilentLogger = require("../SilentLogger");
 
-describe("serializeTimers()", function() {
+describe("Filters serializeTimers():", function() {
     it("Should serialize customtiming string", function(){
 	var Filters = require("../../lib/filters");
 	var filters = new Filters({}, SilentLogger);

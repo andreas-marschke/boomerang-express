@@ -10,7 +10,15 @@ var mockery = require("mockery"),
 var assert = require("chai").assert;
 var expect = require("chai").expect;
 
-describe("Datastore", function() {
+describe("Datastore Core:", function() {
+
+    beforeEach(function(){
+	mockery.enable({
+	    warnOnReplace: false,
+	    warnOnUnregistered: false,
+	    useCleanCache: true
+	});
+    });
 
     after(function() {
 	mockery.deregisterAll();
@@ -29,8 +37,8 @@ describe("Datastore", function() {
 
     it("Should return false on non-existing sites", function(done){
 
-//	mockery.registerMock('fs', fixtures.fsMockWebcollections);
-//	mockery.registerMock('path', fixtures.pathMockWebcollections);
+	mockery.registerMock('fs', fixtures.fsMockWebcollections);
+	mockery.registerMock('path', fixtures.pathMockWebcollections);
 
 	var Datastore = require("../../lib/datastore");
 	var datastore = new Datastore({
@@ -38,15 +46,56 @@ describe("Datastore", function() {
 	    nedb: {
 		"directory": "/some/directory/that/doesn't/exist"
 	    }
-	},LoudLogger);
+	},SilentLogger);
 
-	console.log(datastore);
+	datastore.init("nedb");
 
 	var url = urlParse("http://www.example.org");
-	console.log("typeof engine: ",typeof datastore.engine);
-	datastore.exists("beacon", "0001", "webpage", url, function() {
-	    console.log("arguments on callback for exists", arguments);
-	});
 
+	datastore.exists("beacon", "", "", url, function(exists) {
+	    assert.isFalse(exists);
+	    done();
+	});
+    });
+
+    it("Should return true on existing sites", function(done){
+
+	mockery.registerMock('fs', fixtures.fsMockWebcollections);
+	mockery.registerMock('path', fixtures.pathMockWebcollections);
+
+	var Datastore = require("../../lib/datastore");
+	var datastore = new Datastore({
+	    "active": "nedb",
+	    nedb: {
+		"directory": "/some/directory/that/doesn't/exist"
+	    }
+	},SilentLogger);
+
+	var url = urlParse("http://localhost:4000/shop/article/1.23");
+	datastore.init("nedb");
+	datastore.exists("beacon", "0000", "demo-webpage", url, function(exists) {
+	    assert.isTrue(exists);
+	    done();
+	});
+    });
+
+    it("Should return true on an existing site with a query string", function(done){
+	mockery.registerMock('fs', fixtures.fsMockWebcollections);
+	mockery.registerMock('path', fixtures.pathMockWebcollections);
+
+	var Datastore = require("../../lib/datastore");
+	var datastore = new Datastore({
+	    "active": "nedb",
+	    nedb: {
+		"directory": "/some/directory/that/doesn't/exist"
+	    }
+	},SilentLogger);
+
+	var url = urlParse("http://localhost:4000/shop/article/1.23?query=this&some=more");
+	datastore.init("nedb");
+	datastore.exists("beacon", "0000", "demo-webpage", url, function(exists) {
+	    assert.isTrue(exists);
+	    done();
+	});
     });
 });
