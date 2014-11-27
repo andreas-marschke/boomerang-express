@@ -13,7 +13,7 @@
     "post": [
       "INSTALL=1",
       "UPGRADE=2",
-      "if [ $1 -eq 2 || $1 -eq 1 ]; then cd /opt/boomerang-express && npm install . --cache-min=1 --cache-max=2 --rollback true --color false; fi"
+      "if [ $1 -eq $INSTALL || $1 -eq $UPGRADE ];then cd /opt/boomerang-express && npm install . --cache-min=1 --cache-max=2 --rollback true --color false; fi"
     ],
     "preun": [
         "chkconfig --del boomerang-express"
@@ -24,10 +24,9 @@
     "files": [
         {
             "src": [
-                "lib/*/*.js",
+                "lib/**/*.js",
                 "app.js",
                 "public/*",
-                "lib/backends/*/*.js",
                 "Gruntfile.js"
             ],
             "dest": "/opt/boomerang-express/",
