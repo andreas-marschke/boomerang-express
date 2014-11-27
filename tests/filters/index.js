@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 
 var assert = require("chai").assert;
-var SilentLogger = require("../util");
+var SilentLogger = require("../SilentLogger");
 
 describe("Filters", function() {
     it("Should work on require()",function(){
@@ -36,11 +36,6 @@ describe("Filters", function() {
 
 	assert.deepEqual(filters.log, console, "Logging Mechanism matches added");
     });
-
-    require("./munge");
-    require("./inflate");
-    require("./serializeHeaders");
-    require("./serializeTimers");
 
     it("Should keep empty string as empty string when testing on safeNumeric", function(){
 	var Filters = require("../../lib/filters");
