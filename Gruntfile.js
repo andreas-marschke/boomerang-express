@@ -2,6 +2,18 @@
 /* eslint-disable camelcase */
 module.exports = function (grunt) {
     var rpm = grunt.file.readJSON("rpm.json");
+    var tests = [
+	"tests/blanket.js",
+	"tests/util.js",
+	"tests/index.js",
+	"tests/filters/index.js",
+	"tests/filters/munge.js",
+	"tests/filters/inflate.js",
+	"tests/filters/serializeHeaders.js",
+	"tests/filters/serializeTimers.js",
+	"tests/datastore/index.js",
+	"tests/datastore/nedb/index.js"
+    ];
 
     grunt.initConfig({
 	pkg: grunt.file.readJSON("package.json"),
@@ -26,21 +38,12 @@ module.exports = function (grunt) {
 	mochaTest: {
 	    test: {
 		options: {
-		    reporter: "spec",
-		    quiet: false,
-		    clearRequireCache: true,
-		    gc: true
-		},
-		src: ["tests/*.js"]
-	    },
-	    auto: {
-		options: {
 		    reporter: "tap",
 		    quiet: false,
 		    clearRequireCache: true,
 		    gc: true
 		},
-		src: ["tests/*.js"]
+		src: tests
 	    },
 	    "html-cov": {
 		options: {
@@ -48,7 +51,7 @@ module.exports = function (grunt) {
 		    quiet: true,
 		    captureFile: "tests/coverage.html"
 		},
-		src: ["tests/*.js"]
+		src: tests
 	    }
 	},
 	exec: {
@@ -98,6 +101,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-mocha-test");
 
     grunt.registerTask("rpm", ["clean:rpmTmp", "easy_rpm", "exec:lint"]);
-    grunt.registerTask("test", ["eslint"], ["mochaTest:auto"]);
+    grunt.registerTask("test", ["mochaTest"]);
     grunt.registerTask("default", ["eslint"]);
 };
