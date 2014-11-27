@@ -4,12 +4,12 @@
 var assert = require("chai").assert;
 var SilentLogger = require("../SilentLogger");
 
-describe("Filters munge():", function() {
-    it("Should return an empty object on calling munge with no arguments", function(){
+describe("Filters serialize():", function() {
+    it("Should return an empty object on calling serialize with no arguments", function(){
 	var Filters = require("../../lib/filters");
 	var filters = new Filters({}, SilentLogger);
 
-	assert.deepEqual(filters.munge(),{});
+	assert.deepEqual(filters.serialize(),{});
     });
 
     it("Should generate a valid beacon data object, even if no data was given", function(){
@@ -24,7 +24,7 @@ describe("Filters munge():", function() {
 	    state: "none"
 	};
 
-	var actual = filters.munge(null, null, null, null, null);
+	var actual = filters.serialize(null, null, null, null, null);
 
 	delete actual.created;
 	delete actual.ip;
@@ -39,7 +39,7 @@ describe("Filters munge():", function() {
 	var str = fs.readFileSync("./tests/filters/data.json");
 	var data = JSON.parse(str);
 
-	var r = filters.munge(data.restiming[0]);
+	var r = filters.serialize(data.restiming[0]);
 	delete r.created;
 	delete r.ip;
 	assert.deepEqual(r, data.restimingExpected);
@@ -48,7 +48,7 @@ describe("Filters munge():", function() {
     it("Should honor dnt if set in the configuration options", function(){
 	var Filters = require("../../lib/filters");
 	var filters = new Filters({dnt: true }, SilentLogger);
-	assert.deepEqual(filters.munge({},{dnt: 1}),{});
+	assert.deepEqual(filters.serialize({},{dnt: 1}),{});
     });
 
     it("Should serilize plugins if in data object", function(){
@@ -66,7 +66,7 @@ describe("Filters munge():", function() {
 		state: "none"
 	    };
 
-	var actual = filters.munge(original);
+	var actual = filters.serialize(original);
 
 	delete actual.created;
 	delete actual.ip;
@@ -86,7 +86,7 @@ describe("Filters munge():", function() {
 		headers: {}
 	    };
 
-	var actual = filters.munge({},{},{},"",{}, cookies);
+	var actual = filters.serialize({},{},{},"",{}, cookies);
 
 	delete actual.created;
 	delete actual.ip;
