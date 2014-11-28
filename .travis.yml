@@ -2,12 +2,11 @@ language: node_js
 node_js:
   - "0.11"
   - "0.10"
-
 branches:
   only:
     - master
-
-install: "npm install --cache-min=1 --cache-max=2 --rollback true --color false 2>&1"
-script:
-  - "./node_modules/.bin/grunt --debug --verbose --no-color test"
-  - "./node_modules/.bin/grunt --debug --verbose --no-color eslint"
+matrix:
+  allow_failures:
+    - node_js: "0.11"
+  fast_finish: true
+script: "npm run-script test"
