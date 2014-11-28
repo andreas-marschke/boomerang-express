@@ -5,6 +5,3 @@ node_js:
 
 before_install:
   - "cp config/master.json.example config/master.json"
-
-test:
-  - "npm travis"
