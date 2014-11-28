@@ -7,8 +7,8 @@ module.exports = function (grunt) {
 	"tests/util.js",
 	"tests/index.js",
 	"tests/filters/index.js",
-	"tests/filters/munge.js",
 	"tests/filters/inflate.js",
+	"tests/filters/serialize.js",
 	"tests/filters/serializeHeaders.js",
 	"tests/filters/serializeTimers.js",
 	"tests/datastore/index.js",
@@ -103,5 +103,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask("rpm", ["clean:rpmTmp", "easy_rpm", "exec:lint"]);
     grunt.registerTask("test", ["mochaTest"]);
+    grunt.registerTask("travis", ["mochaTest", "eslint"]);
     grunt.registerTask("default", ["eslint"]);
 };
