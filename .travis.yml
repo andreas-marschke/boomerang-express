@@ -3,5 +3,11 @@ node_js:
   - "0.11"
   - "0.10"
 
-before_install:
-  - "cp config/master.json.example config/master.json"
+branches:
+  only:
+    - master
+
+install: "npm install --cache-min=1 --cache-max=2 --rollback true --color false 2>&1"
+script:
+  - "./node_modules/.bin/grunt --debug --verbose --no-color test"
+  - "./node_modules/.bin/grunt --debug --verbose --no-color eslint"
