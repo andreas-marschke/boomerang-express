@@ -12,42 +12,33 @@
     "datastore" : {
 	"active" : "nedb",
 	"nedb" : {
-	    "directory": "./data~",
-	    "inMemoryOnly" : false,
+	    "directory": "./data",
+	    "inMemoryOnly" : true,
 	    "autoload": false
-	},
-	"mongodb" : {
-	    "db" : "boomerang",
-	    "options" : {
-		"poolSize": 10,
-		"stats": true,
-		"buffer": -1
-	    },
-	    "server" : {
-		"host" : "mongo-01",
-		"port" : 27017,
-		"secure": false
-	    }
 	}
     },
-    "data" : {
-	"numbers" : [
-	    "t_resp",
-	    "t_page",
-	    "t_done",
-	    "dom-ln",
-	    "dom-sz",
-	    "dom-sz",
-	    "dom-img",
-	    "dom-script",
-	    "bw",
-	    "bw_err",
-	    "lat",
-	    "lat_err",
-	    "boomr_fb",
-	    "t_head",
-	    "t_body",
-	    "t_domloaded"
-	]
+    "security" : {
+	"user": "travis",
+	"group"	: "travis"
+    },
+    "filter": {
+	"anyonymize" : true,
+	"blacklist": [],
+        "dnt": false,
+        "key": "boomerang-express"
+    },
+    "log": {
+	"datastore" : {
+	    "level" : "trace"
+	},
+	"filter" : {
+	    "level" : "trace"
+	},
+	"application" : {
+	    "level" : "trace"
+	},
+	"web" : {
+	    "level" : "trace"
+	}
     }
 }
