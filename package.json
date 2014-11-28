@@ -16,7 +16,7 @@
     }
   ],
   "repository": {
-    "type": "none",
+    "type": "git",
     "url": "https://github.com/andreas-marschke/boomerang-express.git"
   },
   "keywords": [
@@ -26,9 +26,8 @@
   ],
   "private": true,
   "scripts": {
-    "start": "forever --minUptime 1000ms --spinSleepTime 1000ms -l log/app.log -o log/stdout.log -e log/stderr.log -p . -a --pidFile log/forever.pid --sourceDir . --workingDir . --plain --watch --watchDirectory . --watchIgnore log/app.log  --watchIgnore log/stdout.log --watchIgnore log/stderr.log app.js",
-    "test": "node_modules/.bin/grunt travis",
-    "lint": "node_modules/.bin/grunt eslint"
+    "start": "node_modules/.bin/forever --minUptime 1000ms --spinSleepTime 1000ms -l log/app.log -o log/stdout.log -e log/stderr.log -p . -a --pidFile log/forever.pid --sourceDir . --workingDir . --plain --watch --watchDirectory . --watchIgnore log/app.log  --watchIgnore log/stdout.log --watchIgnore log/stderr.log app.js",
+    "test": "node_modules/.bin/grunt travis"
   },
   "optionalDependencies": {
     "nedb": "^0.11.1"
@@ -54,7 +53,7 @@
   },
   "main": "./app.js",
   "engines": {
-    "node": ">= 0.8.x"
+    "node": ">= 0.10.x"
   },
   "readmeFilename": "README.md",
   "devDependencies": {
