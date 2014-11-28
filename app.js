@@ -3,6 +3,7 @@
 var conf = require("node-conf"),
     http = require("http"),
     https = require("https"),
+    cluster = require("cluster"),
     fs = require("fs"),
     path = require("path"),
     bunyan = require("bunyan"),
@@ -13,7 +14,7 @@ var conf = require("node-conf"),
     Boomerang = require("./lib/boomerang");
 
 var config = conf.load(process.env.NODE_ENV);
-var app = express();
+var app;
 
 if ( typeof config.server === "undefined" ) {
     var error = new Error("Error could not parse configuration!");
@@ -55,7 +56,7 @@ function handleError(error) {
 
 function main(dsInstance) {
 
-    app.use(new Middlewares(config));
+    app = new Middlewares(config);
 
     var filters = new Filters(config.filter, filterLogger);
     var boomerang = new Boomerang(config, dsInstance, filters, appLogger);
@@ -78,6 +79,7 @@ function postStartup () {
 }
 
 function startListener(listener) {
+
     if (listener.protocol === "http" ) {
 	appLogger.info({ listener: listener }, "Starting HTTP Application Server");
 	httpListener(listener);
