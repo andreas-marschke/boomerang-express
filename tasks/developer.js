@@ -36,8 +36,6 @@ module.exports = function(grunt) {
 
 	grunt.file.mkdir(config.directory);
 
-	grunt.log.write("Using configuration: ", JSON.stringify(config, undefined, 2));
-
 	config.webcollections.forEach(function(collection){
 
 	    // initialize empty collections for beaconed data
