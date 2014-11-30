@@ -3,16 +3,17 @@
 var conf = require("node-conf"),
     http = require("http"),
     https = require("https"),
-    cluster = require("cluster"),
     fs = require("fs"),
     path = require("path"),
-    bunyan = require("bunyan"),
     express = require("express"),
+    cluster = require("cluster"),
+    Logging = require("./lib/logging"),
     Filters = require("./lib/filters"),
     Middlewares = require("./lib/middlewares"),
     Datastore = require("./lib/datastore"),
     Boomerang = require("./lib/boomerang");
 
+var numCpus = require('os').cpus().length;
 var config = conf.load(process.env.NODE_ENV);
 var app;
 
@@ -22,69 +23,41 @@ if ( typeof config.server === "undefined" ) {
     process.exit(1);
 }
 
-var datastoreLogger = bunyan.createLogger({
-    name: "boomerang-express-datastore",
-    immediate: false,
-    streams: [{
-	stream: process.stdout,
-	level: config.log.datastore.level.toString() || "debug"
-    }]
-});
-
-var filterLogger = bunyan.createLogger({
-    name: "boomerang-express-filter",
-    immediate: false,
-    streams: [{
-	stream: process.stdout,
-	level: config.log.filter.level.toString() || "debug"
-    }]
-});
-
-var appLogger = bunyan.createLogger({
-    name: "boomerang-express-application",
-    immediate: false,
-    streams: [{
-	stream: process.stdout,
-	level: config.log.application.level.toString() || "debug"
-    }]
-});
+var logging = new Logging(config.log);
+var filters = new Filters(config.filter, logging.filterLogger);
 
 function handleError(error) {
-    datastoreLogger.fatal( { error: error }, error);
+    logging.datastoreLogger.fatal( { error: error }, error);
     process.exit();
 }
 
 function main(dsInstance) {
-
-    app = new Middlewares(config);
-
-    var filters = new Filters(config.filter, filterLogger);
-    var boomerang = new Boomerang(config, dsInstance, filters, appLogger);
-
+    var boomerang = new Boomerang(config, dsInstance, filters, logging.appLogger);
+    app = express();
     app.use(boomerang.router());
-
+    app.use(logging.webLogger);
+    app.use(new Middlewares(config));
     config.server.listeners.forEach(startListener);
 }
 
 function postStartup () {
     if(typeof config.security !== "undefined") {
-	appLogger.info({context: config.security},"Dropping to security context " + (config.security.user || "boomerang") + ":" + (config.security.group || "boomerang"));
+	logging.appLogger.info({context: config.security},"Dropping to security context " + (config.security.user || "boomerang") + ":" + (config.security.group || "boomerang"));
 	process.setgid(config.security.group || "boomerang");
 	process.setuid(config.security.user || "boomerang");
     } else {
-	appLogger.info({context: { user: "boomerang", group: "boomerang" }},"Dropping to security context boomerang:boomerang");
+	logging.appLogger.info({context: { user: "boomerang", group: "boomerang" }},"Dropping to security context boomerang:boomerang");
 	process.setgid("boomerang");
 	process.setuid("boomerang");
     }
 }
 
 function startListener(listener) {
-
     if (listener.protocol === "http" ) {
-	appLogger.info({ listener: listener }, "Starting HTTP Application Server");
+	logging.appLogger.info({ listener: listener }, "Starting HTTP Application Server");
 	httpListener(listener);
     } else if (listener.protocol === "https" ) {
-	appLogger.info({ listener: listener }, "Starting HTTPS Application Server");
+	logging.appLogger.info({ listener: listener }, "Starting HTTPS Application Server");
 	httpsListener(listener);
     }
 }
@@ -103,11 +76,16 @@ function httpsListener (listener) {
     server.listen(listener.port, listener.listen, postStartup);
 }
 
-
-var ds = new Datastore(config.datastore, datastoreLogger);
-
-if (ds.init(config.datastore.active)) {
-    main(ds);
+if (cluster.isMaster) {
+    for (var i = 0; i < numCpus; i++) {
+	cluster.fork();
+    }
 } else {
-    handleError(new Error("Could not initialize the Datastore"));
+
+    var ds = new Datastore(config.datastore, logging.datastoreLogger);
+    if (ds.init(config.datastore.active)) {
+	main(ds);
+    } else {
+	handleError(new Error("Could not initialize the Datastore"));
+    }
 }
