@@ -43,7 +43,7 @@
     "heapdump": "^0.2.10",
     "helmet": "^0.5.2",
     "lodash": "^2.4.1",
-    "mongodb": ">= 2.0.5",
+    "mongodb": "^2.0.8",
     "node-conf": ">= 0.0.5",
     "serve-static": "^1.6.3",
     "useragent": "^2.1.1"
