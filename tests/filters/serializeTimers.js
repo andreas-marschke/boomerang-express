@@ -17,7 +17,7 @@ describe("Filters serializeTimers():", function() {
 	    t_scripts: 100,
 	    t_domloaded: 376
 	};
-	assert.deepEqual(filters.serializeTimers(original),expected);
+	assert.deepEqual(filters.serializeTimers(original), expected);
     });
 
     it("Should serialize customtiming string", function(){

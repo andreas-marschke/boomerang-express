@@ -32,7 +32,7 @@ describe("Datastore Backend - NeDB:", function() {
 	var Backend = require("../../../lib/datastore/nedb");
 	var backend = new Backend();
 
-	assert.instanceOf(backend,Backend, "instance is not a Backend");
+	assert.instanceOf(backend, Backend, "instance is not a Backend");
     });
 
     it("Should fail on initialization without configuration", function(){
@@ -194,7 +194,7 @@ describe("Datastore Backend - NeDB:", function() {
 	}, SilentLogger);
 
 	backend.loadDirectory("/some/directory/that/doesn't/exist");
-	expect(backend.insert.bind(backend,"beacon", "0000")).to.throw(Error);
+	expect(backend.insert.bind(backend, "beacon", "0000")).to.throw(Error);
     });
 
     it("Should return an id string on insertion callback", function(done){

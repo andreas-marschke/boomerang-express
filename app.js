@@ -42,11 +42,11 @@ function main(dsInstance) {
 
 function postStartup () {
     if(typeof config.security !== "undefined") {
-	logging.appLogger.info({context: config.security},"Dropping to security context " + (config.security.user || "boomerang") + ":" + (config.security.group || "boomerang"));
+	logging.appLogger.info({context: config.security}, "Dropping to security context " + (config.security.user || "boomerang") + ":" + (config.security.group || "boomerang"));
 	process.setgid(config.security.group || "boomerang");
 	process.setuid(config.security.user || "boomerang");
     } else {
-	logging.appLogger.info({context: { user: "boomerang", group: "boomerang" }},"Dropping to security context boomerang:boomerang");
+	logging.appLogger.info({context: { user: "boomerang", group: "boomerang" }}, "Dropping to security context boomerang:boomerang");
 	process.setgid("boomerang");
 	process.setuid("boomerang");
     }
@@ -71,7 +71,7 @@ function httpsListener (listener) {
     var server = https.createServer({
 	key: fs.readFileSync(path.resolve(listener.key)),
 	cert: fs.readFileSync(path.resolve(listener.cert))
-    },app);
+    }, app);
 
     server.listen(listener.port, listener.listen, postStartup);
 }

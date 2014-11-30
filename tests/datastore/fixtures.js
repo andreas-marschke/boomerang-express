@@ -1,5 +1,5 @@
 "use strict";
-
+/* eslint-disable no-underscore-dangle, camelcase */
 module.exports = {
     directoryContents: [
 	"beacon_0000.db",

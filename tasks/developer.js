@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
     };
 
-    grunt.registerTask("developer","Setup test database for filter development for use with nedb",function() {
+    grunt.registerTask("developer", "Setup test database for filter development for use with nedb", function() {
 
 	var jsonConfig = grunt.file.readJSON("tasks/developer.config.json");
 	var config = merge(defaultConfig, jsonConfig);
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 
 	    // initialize empty collections for beaconed data
 	    collection.types.forEach(function(type) {
-		grunt.file.write(config.directory + path.sep + type + "_" + collection.owner + ".db","");
+		grunt.file.write(config.directory + path.sep + type + "_" + collection.owner + ".db", "");
 	    });
 	});
 
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
 		"inMemoryOnly" : false,
 		"autoload": false
 	    }
-	},undefined,2));
+	}, undefined, 2));
     });
 
 };

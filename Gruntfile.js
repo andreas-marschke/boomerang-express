@@ -23,7 +23,7 @@ module.exports = function (grunt) {
 		format: "compact"
 	    },
 	    target: [
-		"tasks/*.js",
+		"tasks/**.js",
 		"Gruntfile.js",
 		"app.js",
 		"lib/**/*.js",

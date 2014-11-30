@@ -28,7 +28,7 @@ describe("Datastore Core:", function() {
 
     it("Should create a Datastore object", function(){
 	var Datastore = require("../../lib/datastore");
-	var datastore = new Datastore({},SilentLogger);
+	var datastore = new Datastore({}, SilentLogger);
 
 	assert.instanceOf(datastore, Datastore, "Datastore instance");
     });
@@ -44,7 +44,7 @@ describe("Datastore Core:", function() {
 	    nedb: {
 		"directory": "/some/directory/that/doesn't/exist"
 	    }
-	},SilentLogger);
+	}, SilentLogger);
 
 	datastore.init("nedb");
 
@@ -67,7 +67,7 @@ describe("Datastore Core:", function() {
 	    nedb: {
 		"directory": "/some/directory/that/doesn't/exist"
 	    }
-	},SilentLogger);
+	}, SilentLogger);
 
 	var url = urlParse("http://localhost:4000/shop/article/1.23");
 	datastore.init("nedb");
@@ -87,7 +87,7 @@ describe("Datastore Core:", function() {
 	    nedb: {
 		"directory": "/some/directory/that/doesn't/exist"
 	    }
-	},SilentLogger);
+	}, SilentLogger);
 
 	var url = urlParse("http://localhost:4000/shop/article/1.23?query=this&some=more");
 	datastore.init("nedb");

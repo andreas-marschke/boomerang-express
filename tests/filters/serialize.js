@@ -9,7 +9,7 @@ describe("Filters serialize():", function() {
 	var Filters = require("../../lib/filters");
 	var filters = new Filters({}, SilentLogger);
 
-	assert.deepEqual(filters.serialize(),{});
+	assert.deepEqual(filters.serialize(), {});
     });
 
     it("Should generate a valid beacon data object, even if no data was given", function(){
@@ -48,7 +48,7 @@ describe("Filters serialize():", function() {
     it("Should honor dnt if set in the configuration options", function(){
 	var Filters = require("../../lib/filters");
 	var filters = new Filters({dnt: true }, SilentLogger);
-	assert.deepEqual(filters.serialize({},{dnt: 1}),{});
+	assert.deepEqual(filters.serialize({}, {dnt: 1}), {});
     });
 
     it("Should serilize plugins if in data object", function(){
@@ -86,7 +86,7 @@ describe("Filters serialize():", function() {
 		headers: {}
 	    };
 
-	var actual = filters.serialize({},{},{},"",{}, cookies);
+	var actual = filters.serialize({}, {}, {}, "", {}, cookies);
 
 	delete actual.created;
 	delete actual.ip;

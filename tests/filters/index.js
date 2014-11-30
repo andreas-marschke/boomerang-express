@@ -6,7 +6,7 @@ var assert = require("chai").assert;
 var SilentLogger = require("../SilentLogger");
 
 describe("Filters Core:", function() {
-    it("Should work on require()",function(){
+    it("Should work on require()", function(){
 
 	require("../../lib/filters");
     });
@@ -42,6 +42,6 @@ describe("Filters Core:", function() {
 	var filters = new Filters({}, SilentLogger);
 	var expected = "";
 
-	assert.equal(filters.safeNumeric(""),expected);
+	assert.equal(filters.safeNumeric(""), expected);
     });
 });

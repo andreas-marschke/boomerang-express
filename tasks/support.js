@@ -2,7 +2,7 @@
 
 module.exports = function(grunt) {
 
-    grunt.registerTask("support","Write Support information as JSON to STDOUT",function() {
+    grunt.registerTask("support", "Write Support information as JSON to STDOUT", function() {
 	var support = {
 	    version: process.version,
 	    versions: process.versions,
@@ -22,6 +22,6 @@ module.exports = function(grunt) {
 	    modules: process.moduleLoadList
 	};
 	grunt.log.write("Support Data: \n");
-	grunt.log.write(JSON.stringify(support,undefined,2));
+	grunt.log.write(JSON.stringify(support, undefined, 2));
     });
 };
