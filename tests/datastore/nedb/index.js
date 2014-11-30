@@ -1,5 +1,5 @@
+/* global it, describe, beforeEach, afterEach */
 "use strict";
-/* global it, describe, before, after */
 
 var mockery = require("mockery"),
     SilentLogger = require("../../SilentLogger"),
@@ -43,7 +43,7 @@ describe("Datastore Backend - NeDB:", function() {
     });
 
     it("Should fail on non-existant directory", function(){
-	mockery.registerMock('fs', {
+	mockery.registerMock("fs", {
 	    existsSync: function() {
 		return false;
 	    }
@@ -59,7 +59,7 @@ describe("Datastore Backend - NeDB:", function() {
 
 	var errorThrown = new Error("File not found!");
 
-	mockery.registerMock('fs', {
+	mockery.registerMock("fs", {
 	    readdirSync: function() {
 		return errorThrown;
 	    }
@@ -77,21 +77,21 @@ describe("Datastore Backend - NeDB:", function() {
 
     it("Should load directory contents from directory matching *.db as NeDB files", function(){
 
-	mockery.registerMock('fs', {
-	    readdirSync: function(arg) {
+	mockery.registerMock("fs", {
+	    readdirSync: function() {
 		return fixtures.directoryContents;
 	    }
 	});
 
 	function NeDB() {
-	    this.loadDatabase = function(args) {
+	    this.loadDatabase = function() {
 		return ;
 	    };
 
 	    return this;
-	};
+	}
 
-	mockery.registerMock('nedb', NeDB);
+	mockery.registerMock("nedb", NeDB);
 
 	var Backend = require("../../../lib/datastore/nedb");
 	var backend = new Backend({
@@ -111,21 +111,21 @@ describe("Datastore Backend - NeDB:", function() {
     });
 
     it("Should throw an Error if no files have been found in the database directory", function(){
-	mockery.registerMock('fs', {
-	    readdirSync: function(arg) {
+	mockery.registerMock("fs", {
+	    readdirSync: function() {
 		return [];
 	    }
 	});
 
 	function NeDB() {
-	    this.loadDatabase = function(args) {
+	    this.loadDatabase = function() {
 		return ;
 	    };
 
 	    return this;
-	};
+	}
 
-	mockery.registerMock('nedb', NeDB);
+	mockery.registerMock("nedb", NeDB);
 
 	var Backend = require("../../../lib/datastore/nedb");
 	var backend = new Backend({
@@ -138,23 +138,23 @@ describe("Datastore Backend - NeDB:", function() {
     });
 
     it("Should throw an error 'Collection not found!' when we pass no arguments", function(){
-	mockery.registerMock('fs', {
-	    readdirSync: function(arg) {
+	mockery.registerMock("fs", {
+	    readdirSync: function() {
 		return fixtures.directoryContents;
 	    }
 	});
 
 	function NeDB() {
-	    this.loadDatabase = function(args) {
+	    this.loadDatabase = function() {
 		return {};
 	    };
 	    this.insert = function() {
 
 	    };
 	    return this;
-	};
+	}
 
-	mockery.registerMock('nedb', NeDB);
+	mockery.registerMock("nedb", NeDB);
 
 	var Backend = require("../../../lib/datastore/nedb");
 	var backend = new Backend({
@@ -168,23 +168,23 @@ describe("Datastore Backend - NeDB:", function() {
     });
 
     it("Should throw an error when no collection and data is given", function(){
-	mockery.registerMock('fs', {
-	    readdirSync: function(arg) {
+	mockery.registerMock("fs", {
+	    readdirSync: function() {
 		return fixtures.directoryContents;
 	    }
 	});
 
 	function NeDB() {
-	    this.loadDatabase = function(args) {
+	    this.loadDatabase = function() {
 		return {};
 	    };
 	    this.insert = function() {
 
 	    };
 	    return this;
-	};
+	}
 
-	mockery.registerMock('nedb', NeDB);
+	mockery.registerMock("nedb", NeDB);
 
 	var Backend = require("../../../lib/datastore/nedb");
 	var backend = new Backend({
@@ -199,7 +199,7 @@ describe("Datastore Backend - NeDB:", function() {
 
     it("Should return an id string on insertion callback", function(done){
 
-	mockery.registerMock('fs', fixtures.fsMockEmpty);
+	mockery.registerMock("fs", fixtures.fsMockEmpty);
 
 	var Backend = require("../../../lib/datastore/nedb");
 	var backend = new Backend({
@@ -211,7 +211,6 @@ describe("Datastore Backend - NeDB:", function() {
 	backend.loadDirectory("/some/directory/that/doesn't/exist");
 
 	var data = { };
-	var expected = {collection: "demo-webpage"};
 
 	backend.insert("beacon", "0000", "demo-webpage", data, function(id) {
 	    assert.isString(id);
@@ -220,7 +219,7 @@ describe("Datastore Backend - NeDB:", function() {
     });
 
     it("Should throw an error if reading data failed", function(){
-	mockery.registerMock('fs', fixtures.fsMockWebcollections);
+	mockery.registerMock("fs", fixtures.fsMockWebcollections);
 
 	var Backend = require("../../../lib/datastore/nedb");
 	var backend = new Backend({ "directory": "/some/directory/that/doesn't/exist" }, SilentLogger);
@@ -230,7 +229,7 @@ describe("Datastore Backend - NeDB:", function() {
     });
 
     it("Should return the webcollection document for a specific user when queried", function(done){
-	mockery.registerMock('fs', fixtures.fsMockWebcollections);
+	mockery.registerMock("fs", fixtures.fsMockWebcollections);
 
 	var Backend = require("../../../lib/datastore/nedb");
 	var backend = new Backend({"directory": "/some/directory/that/doesn't/exist" }, SilentLogger);

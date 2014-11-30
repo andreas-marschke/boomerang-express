@@ -13,7 +13,7 @@ var conf = require("node-conf"),
     Datastore = require("./lib/datastore"),
     Boomerang = require("./lib/boomerang");
 
-var numCpus = require('os').cpus().length;
+var numCpus = require("os").cpus().length;
 var config = conf.load(process.env.NODE_ENV);
 var app;
 

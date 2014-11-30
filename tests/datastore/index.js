@@ -1,14 +1,12 @@
+/* global it, describe, beforeEach, afterEach */
 "use strict";
-/* global it, describe, before, after */
 
 var mockery = require("mockery"),
     fixtures = require("./fixtures"),
     urlParse = require("url").parse,
-    SilentLogger = require("../SilentLogger"),
-    LoudLogger = require("../LoudLogger");
+    SilentLogger = require("../SilentLogger");
 
 var assert = require("chai").assert;
-var expect = require("chai").expect;
 
 describe("Datastore Core:", function() {
 
@@ -20,7 +18,7 @@ describe("Datastore Core:", function() {
 	});
     });
 
-    after(function() {
+    afterEach(function() {
 	mockery.deregisterAll();
     });
 
@@ -37,8 +35,8 @@ describe("Datastore Core:", function() {
 
     it("Should return false on non-existing sites", function(done){
 
-	mockery.registerMock('fs', fixtures.fsMockWebcollections);
-	mockery.registerMock('path', fixtures.pathMockWebcollections);
+	mockery.registerMock("fs", fixtures.fsMockWebcollections);
+	mockery.registerMock("path", fixtures.pathMockWebcollections);
 
 	var Datastore = require("../../lib/datastore");
 	var datastore = new Datastore({
@@ -60,8 +58,8 @@ describe("Datastore Core:", function() {
 
     it("Should return true on existing sites", function(done){
 
-	mockery.registerMock('fs', fixtures.fsMockWebcollections);
-	mockery.registerMock('path', fixtures.pathMockWebcollections);
+	mockery.registerMock("fs", fixtures.fsMockWebcollections);
+	mockery.registerMock("path", fixtures.pathMockWebcollections);
 
 	var Datastore = require("../../lib/datastore");
 	var datastore = new Datastore({
@@ -80,8 +78,8 @@ describe("Datastore Core:", function() {
     });
 
     it("Should return true on an existing site with a query string", function(done){
-	mockery.registerMock('fs', fixtures.fsMockWebcollections);
-	mockery.registerMock('path', fixtures.pathMockWebcollections);
+	mockery.registerMock("fs", fixtures.fsMockWebcollections);
+	mockery.registerMock("path", fixtures.pathMockWebcollections);
 
 	var Datastore = require("../../lib/datastore");
 	var datastore = new Datastore({

@@ -38,7 +38,7 @@ module.exports = {
 	}]
     },
     fsMockEmpty: {
-	readdirSync: function(arg) {
+	readdirSync: function() {
 	    return module.exports.directoryContents ;
 	},
 	mkdirP: function(path, auth, callback) {
@@ -83,7 +83,7 @@ module.exports = {
 	}
     },
     fsMockWebcollections: {
-	readdirSync: function(arg) {
+	readdirSync: function() {
 	    return module.exports.directoryContents ;
 	},
 	mkdirP: function(path, auth, callback) {
@@ -95,7 +95,7 @@ module.exports = {
 	exists: function(path, callback) {
 	    callback(true);
 	},
-	existsSync: function(path) {
+	existsSync: function() {
 	    return true;
 	},
 	readFile: function(path, opts, callback) {

@@ -1,11 +1,10 @@
+/* global it, describe, beforeEach, afterEach */
+"use strict";
 var mockery = require("mockery"),
-    fixtures = require("./fixtures"),
     urlParse = require("url").parse,
-    SilentLogger = require("../SilentLogger"),
-    LoudLogger = require("../LoudLogger");
+    SilentLogger = require("../SilentLogger");
 
 var assert = require("chai").assert;
-var expect = require("chai").expect;
 
 describe("Datastore Validation:", function() {
 
@@ -17,7 +16,7 @@ describe("Datastore Validation:", function() {
 	});
     });
 
-    after(function() {
+    afterEach(function() {
 	mockery.deregisterAll();
     });
 
@@ -64,7 +63,7 @@ describe("Datastore Validation:", function() {
 	assert.isFalse(testableFn(wrongSite, {url: "http://www.example.org"}));
 
 	var emptySite = urlParse("");
-	assert.isFalse(testableFn(wrongSite, {url: "http://www.example.org"}));
+	assert.isFalse(testableFn(emptySite, {url: "http://www.example.org"}));
 
 	var portSwitch = urlParse("http://localhost:4001/www/shop20");
 	assert.isFalse(testableFn(portSwitch, {url: "http://localhost:4000/www/shop20"}));
