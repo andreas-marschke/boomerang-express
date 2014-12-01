@@ -13,7 +13,8 @@ module.exports = function (grunt) {
 	"tests/filters/serializeTimers.js",
 	"tests/datastore/index.js",
 	"tests/datastore/validation.js",
-	"tests/datastore/nedb/index.js"
+	"tests/datastore/nedb/index.js",
+	"tests/datastore/mongodb/index.js"
     ];
 
     grunt.initConfig({
