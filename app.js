@@ -77,7 +77,20 @@ function httpsListener (listener) {
 }
 
 if (cluster.isMaster) {
-    for (var i = 0; i < numCpus; i++) {
+
+    var forks = 0;
+    if (config.server.threads) {
+	if (config.server.threads > numCpus) {
+	    forks = numCpus;
+	} else {
+	    forks = config.server.threads;
+	}
+    } else {
+	forks = 1;
+    }
+
+
+    for (var i = 0; i < forks; i++) {
 	cluster.fork();
     }
 } else {
