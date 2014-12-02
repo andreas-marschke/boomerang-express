@@ -32,6 +32,14 @@ module.exports = function (grunt) {
 		"tests/**/*.js"
 	    ]
 	},
+	plato: {
+	    options: {},
+	    "boomerang-express": {
+		files: {
+		    "complexity/": ["./lib/**/*.js"]
+		}
+	    }
+	},
 	clean: {
 	    options: {},
 	    src: ["lib/routes/*~", "*.js~"],
@@ -101,9 +109,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-eslint");
     grunt.loadNpmTasks("grunt-easy-rpm");
     grunt.loadNpmTasks("grunt-mocha-test");
+    grunt.loadNpmTasks("grunt-plato");
 
     grunt.registerTask("rpm", ["clean:rpmTmp", "easy_rpm", "exec:lint"]);
-    grunt.registerTask("test", ["mochaTest"]);
-    grunt.registerTask("travis", ["mochaTest", "eslint"]);
-    grunt.registerTask("default", ["eslint"]);
+    grunt.registerTask("report", ["mochaTest:html-cov", "plato"]);
+    grunt.registerTask("test", ["mochaTest:test", "eslint"]);
+    grunt.registerTask("default", ["test"]);
 };
