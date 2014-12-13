@@ -28,7 +28,6 @@ module.exports = function (grunt) {
 		"Gruntfile.js",
 		"app.js",
 		"lib/**/*.js",
-		"lib/backends/**/*",
 		"tests/**/*.js"
 	    ]
 	},
@@ -42,8 +41,9 @@ module.exports = function (grunt) {
 	},
 	clean: {
 	    options: {},
-	    src: ["lib/routes/*~", "*.js~"],
-	    rpmTmp: ["tmp-*"]
+	    src: ["**~"],
+	    rpmTmp: ["tmp-*"],
+	    complexity: "complexity*"
 	},
 	mochaTest: {
 	    test: {
