@@ -7,4 +7,5 @@ tmp-*
 tasks/*
 tests/*
 log*
+.git*
 *.log
