@@ -1,14 +1,9 @@
 /* global it, describe, beforeEach, afterEach */
 "use strict";
 
-var mockery = require("mockery"),
-    SilentLogger = require("../../SilentLogger"),
-    LoudLogger = require("../../LoudLogger"),
-    mongoFixtures = require("mongodb-fixtures"),
-    fixtures = require("../fixtures.js");
+var mockery = require("mockery");
 
 var assert = require("chai").assert;
-var expect = require("chai").expect;
 
 describe("Datastore Backend - MongoDB:", function() {
 
@@ -32,7 +27,6 @@ describe("Datastore Backend - MongoDB:", function() {
     });
 
     it.skip("Should create an instance of the Datastore Backend", function(){
-	mockery('mongodb');
 
 	var Backend = require("../../../lib/datastore/mongodb");
 	var backend = new Backend();
