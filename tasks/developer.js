@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 	    "_id" : "d34db33f",
 	    "types" : [
 		"beacon",
-		"click",
+		"clicks",
 		"resource"
 	    ],
 	    "name" : "demo-webpage",
