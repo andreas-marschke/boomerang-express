@@ -2,6 +2,8 @@
 
 # Boomerang-Express
 
+[![Build Status](https://travis-ci.org/andreas-marschke/boomerang-express.svg?branch=master)](https://travis-ci.org/andreas-marschke/boomerang-express)
+
 A recieving server for [boomerangjs](https://github.com/lognormal/boomerang) beacon data and structured storage.
 
 ## Usage
