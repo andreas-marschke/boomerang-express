@@ -1,4 +1,3 @@
-complexity/*
 \#*
 .\#*
 *~
@@ -6,11 +5,9 @@ complexity/*
 node_modules*
 tmp-*
 *.rpm
-config/*.json
-tests/backends/configs.js
-tasks/developer.config.json
-tests/coverage.html
 log/*
-npm-debug.log*tmp*
+npm-debug.log*
 tmp/*
-npm-debug.log
+
+_site/
+assets/vendor/
