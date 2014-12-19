@@ -1,0 +1,94 @@
+{
+    "original": {
+        "plugins": "RT,ResourceTiming,BW,GUID",
+        "rt.start": "navigation",
+        "rt.tstart": 1416626297393,
+        "rt.bstart": 1416626297568,
+        "rt.end": 1416626297856,
+        "t_resp": 13,
+        "t_page": 450,
+        "t_done": 463,
+        "t_other": "t_body|129,t_navigation|1,t_scripts|127,t_domloaded|411",
+        "r": "",
+        "v": "0.9",
+        "u": "http://localhost:4000/"
+    },
+    "expected": {
+        "plugins": [
+            "RT",
+            "ResourceTiming",
+            "BW",
+            "GUID"
+        ],
+        "rt": {
+            "start": "navigation",
+            "tstart": 1416626297393,
+            "bstart": 1416626297568,
+            "end": 1416626297856
+        },
+        "t": {
+            "resp": 13,
+            "page": 450,
+            "done": 463
+        },
+        "customTiming": {
+            "t_body": 129,
+            "t_navigation": 1,
+            "t_scripts": 127,
+            "t_domloaded": 411
+        },
+        "r": "",
+        "v": "0.9",
+        "u": "http://localhost:4000/"
+    },
+    "restiming": [
+        {
+            "rt_name": "http://localhost:4000/js/boomerang/boomerang.js",
+            "rt_in_type": "script",
+            "rt_st": 140.6439999700524,
+            "rt_dur": 27.659000013954937,
+            "rt_fet_st": 140.6439999700524,
+            "rt_res_end": 168.30299998400733,
+            "rt_dns_st": 140.6439999700524,
+            "rt_dns_end": 140.6439999700524,
+            "rt_con_st": 140.6439999700524,
+            "rt_con_end": 140.6439999700524,
+            "rt_req_st": 148.43300002394244,
+            "rt_res_st": 157.73500001523644
+        }
+    ],
+  "restimingExpected": {
+    "agent": {},
+    "cookies" : {},
+    "customTiming": {},
+    "headers": {},
+    "page": "none",
+    "state": "none",
+    "rt": {
+        "name": "http://localhost:4000/js/boomerang/boomerang.js",
+        "in": {
+            "type": "script"
+        },
+        "st": 140.6439999700524,
+        "dur": 27.659000013954937,
+        "fet": {
+            "st": 140.6439999700524
+        },
+        "res": {
+            "end": 168.30299998400733,
+            "st": 157.73500001523644
+        },
+        "dns": {
+            "st": 140.6439999700524,
+            "end": 140.6439999700524
+        },
+        "con": {
+            "st": 140.6439999700524,
+            "end": 140.6439999700524
+        },
+        "req": {
+            "st": 148.43300002394244
+        }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+complexity/*
+\#*
+.\#*
+*~
+*.swp
+node_modules*
+tmp-*
+*.rpm
+config/*.json
+tests/backends/configs.js
+tasks/developer.config.json
+tests/coverage.html
+log/*
+npm-debug.log*tmp*
+tmp/*
+npm-debug.log

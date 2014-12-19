@@ -1,0 +1,11 @@
+tests/
+*~
+*.swp
+node_modules*
+tmp-*
+*.rpm
+tasks/*
+tests/*
+log*
+.git*
+*.log

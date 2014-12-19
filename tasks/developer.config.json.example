@@ -1,0 +1,22 @@
+{
+    "directory": "data~/",
+    "webcollections": [{
+	"_id" : "d34db33f",
+	"types" : [
+	    "beacon",
+	    "click",
+	    "resource"
+	],
+	"name" : "demo-webpage",
+	"owner" : "0000",
+	"locations" : [{
+	    "url" : "http://localhost:4000",
+	    "shared" : false
+	}]
+    }],
+    "users": [{
+	"_id" : "0000",
+	"name" : "user",
+	"via" : "local"
+    }]
+}

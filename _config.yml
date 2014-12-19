@@ -1,0 +1,14 @@
+name: Boomerang-Express
+markdown: redcarpet
+redcarpet:
+  input: "GFM"
+  extenstions: ["tables","autolink"]
+highlighter: "pygments"
+
+encoding: utf-8
+exclude: [".eslintrc", ".bowerrc", "assets/vendor", "node_modules", "package.json", ".gitignore", ".git"]
+destination: "./_site"
+
+#url: "http://boomerang-express.com"
+url: "http://localhost:4000"
+

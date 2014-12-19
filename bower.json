@@ -1,0 +1,33 @@
+{
+  "name": "boomerang-express-ghpages",
+  "version": "0.0.1",
+  "homepage": "http://boomerang-express.org",
+  "authors": [
+    "Andreas Marschke <npm@andreas-marschke.name>"
+  ],
+  "description": "Boomerang Express - The Scalable Web Analytics Plattform",
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "Web",
+    "RUM",
+    "Analytics"
+  ],
+  "license": "FDL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1",
+    "font-awesome": "~4.2.0",
+    "holderjs": "~2.4.1"
+  }
+}

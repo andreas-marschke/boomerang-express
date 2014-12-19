@@ -1,0 +1,28 @@
+# humanstxt.org/
+# Humans Responsible & technology colophon
+
+# TEAM
+
+  Andreas Marschke -- Creator
+
+# THANKS
+
+ - Twitter Bootstrap @mdo and @fat
+   http://getbootstrap.com/
+   CC BY 3.0
+
+ - jQuery
+   http://jquery.com/
+   MIT license
+
+ - Font Awesome
+   http://fortawesome.github.io/Font-Awesome/license/
+   Font License: SIL OFL 1.1
+   Code License: MIT License
+   Documentation License CC BY 3.0
+   The use of these trademarks does not indicate endorsement of the trademark holder by Font Awesome, nor vice versa.
+   
+ - Basic iPhone and and Tablet Frames  via Interface Sketch
+   http://www.interfacesketch.com/
+   Creative Commons Attribution 4.0 International license.
+   
