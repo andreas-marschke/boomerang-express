@@ -110,7 +110,7 @@ Globally:
 
 Configuration is defined in config/master.json
 
-See the [setup documentation](docs/setup.md) for more information on how
+See the [setup documentation](docs/index.md) for more information on how
 to configure boomerang-express for your environment.
 
 ## Deployment
