@@ -30,6 +30,7 @@
     "test": "node_modules/.bin/grunt test"
   },
   "optionalDependencies": {
+    "bunyan-logstash": "git://github.com/andreas-marschke/bunyan-logstash#master",
     "nedb": "^0.11.1"
   },
   "dependencies": {

@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     var defaultConfig = {
 	directory: "data~/",
 	webcollections: [{
-	    "_id" : "d34db33f",
+	    "_id" : "test-Id",
 	    "types" : [
 		"beacon",
 		"clicks",
@@ -67,6 +67,9 @@ module.exports = function(grunt) {
 		"autoload": false
 	    }
 	}, undefined, 2));
+
+	grunt.log.writeln("You may now use this configuration now also on your client setup:");
+	grunt.log.writeln("URL: " + "//" + "localhost:4000/beacon/" + config.webcollections[0].owner + "/" + config.webcollections[0].name + "/" + "page/status");
     });
 
 };
