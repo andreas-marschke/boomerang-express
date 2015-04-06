@@ -1,0 +1,34 @@
+{
+  "d34db22f": {
+    "types": [
+      "beacon",
+      "click",
+      "resource",
+      "form"
+    ],
+    "name": "demo-load-test",
+    "owner": "0001",
+    "locations": [
+      {
+	"url": "http://localhost:4000",
+	"shared": false
+      }
+    ]
+  },
+  "d34db33f": {
+    "types": [
+      "beacon",
+      "click",
+      "resource",
+      "form"
+    ],
+    "name": "demo-webpage",
+    "owner": "0000",
+    "locations": [
+      {
+	"url": "http://localhost:4000",
+	"shared": false
+      }
+    ]
+  }
+}

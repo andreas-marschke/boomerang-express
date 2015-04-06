@@ -1,0 +1,10 @@
+{
+  "0000": {
+    "name": "user",
+    "via": "local"
+  }
+  "0001" : {
+    "name": "user2",
+    "via": "local"
+  }
+}
