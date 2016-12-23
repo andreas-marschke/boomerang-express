@@ -1,45 +1,45 @@
 {
-    "server": {
-    	"threads": 1,
-	"listeners" : [
+  "server": {
+    "threads": 1,
+	  "listeners" : [
 	    {
-		"protocol" : "http",
-		"port" : "4001",
-		"listen" : "0.0.0.0"
+		    "protocol" : "http",
+		    "port" : "4001",
+		    "listen" : "0.0.0.0"
 	    }
-	],
-	"static_path": "./public"
-    },
-    "datastore" : {
-	"active" : "nedb",
-	"nedb" : {
+	  ],
+	  "static_path": "./public"
+  },
+  "datastore" : {
+	  "active" : "nedb",
+	  "nedb" : {
 	    "directory": "./data",
 	    "inMemoryOnly" : true,
 	    "autoload": false
-	}
-    },
-    "security" : {
-	"user": "travis",
-	"group"	: "travis"
-    },
-    "filter": {
-	"anyonymize" : true,
-	"blacklist": [],
-        "dnt": false,
-        "key": "boomerang-express"
-    },
-    "log": {
-	"datastore" : {
+	  }
+  },
+  "security" : {
+	  "user": "travis",
+	  "group"	: "travis"
+  },
+  "filter": {
+	  "anyonymize" : true,
+	  "blacklist": [],
+    "dnt": false,
+    "key": "boomerang-express"
+  },
+  "log": {
+	  "datastore" : {
 	    "level" : "trace"
-	},
-	"filter" : {
+	  },
+	  "filter" : {
 	    "level" : "trace"
-	},
-	"application" : {
+	  },
+	  "application" : {
 	    "level" : "trace"
-	},
-	"web" : {
+	  },
+	  "web" : {
 	    "level" : "trace"
-	}
-    }
+	  }
+  }
 }

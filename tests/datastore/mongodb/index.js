@@ -7,31 +7,31 @@ var assert = require("chai").assert;
 
 describe("Datastore Backend - MongoDB:", function() {
 
-    beforeEach(function(){
-	mockery.enable({
-	    warnOnReplace: false,
-	    warnOnUnregistered: false,
-	    useCleanCache: true
-	});
+  beforeEach(function(){
+    mockery.enable({
+      warnOnReplace: false,
+      warnOnUnregistered: false,
+      useCleanCache: true
     });
+  });
 
-    afterEach(function() {
-	mockery.resetCache();
-	mockery.deregisterAll();
-	mockery.disable();
-    });
+  afterEach(function() {
+    mockery.resetCache();
+    mockery.deregisterAll();
+    mockery.disable();
+  });
 
 
-    it("Should work on require()", function(){
-	require("../../../lib/datastore/mongodb");
-    });
+  it("Should work on require()", function(){
+    require("../../../lib/datastore/mongodb");
+  });
 
-    it.skip("Should create an instance of the Datastore Backend", function(){
+  it.skip("Should create an instance of the Datastore Backend", function(){
 
-	var Backend = require("../../../lib/datastore/mongodb");
-	var backend = new Backend();
+    var Backend = require("../../../lib/datastore/mongodb");
+    var backend = new Backend();
 
-	assert.instanceOf(backend, Backend, "instance is not a Backend");
-    });
+    assert.instanceOf(backend, Backend, "instance is not a Backend");
+  });
 
 });

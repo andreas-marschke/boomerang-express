@@ -30,7 +30,7 @@
     "test": "node_modules/.bin/grunt test"
   },
   "optionalDependencies": {
-    "bunyan-logstash": "git://github.com/andreas-marschke/bunyan-logstash#master",
+    "bunyan-logstash": "git://github.com/yubl/bunyan-logstash#master",
     "nedb": "^0.11.1"
   },
   "dependencies": {
@@ -41,7 +41,6 @@
     "express": "^4.10.2",
     "express-bunyan-logger": "^1.1.0",
     "forever": ">= 0.10.8",
-    "heapdump": "^0.2.10",
     "helmet": "^0.5.2",
     "lodash": "^2.4.1",
     "mongodb": "^2.0.8",
